@@ -10,6 +10,8 @@ const int V = 1;
 const int H = 0;
 cMainMenu *menu;
 
+
+
 void setup() {
   lcd.begin(16,2);
   Serial.begin(9600);
@@ -21,12 +23,14 @@ void setup() {
   
 }
 
-void loop() {
+void loop() {    
   int vert, horiz;
   vert = analogRead(V);
   horiz = analogRead(H);
-  lcd.createChar(2,byte(2));
-  //lcd.write(0xE2);
+  //lcd.begin(16,2);
+  lcd.write(byte(0)); 
+  lcd.setCursor(0,1);
+  delay(5000);
   if(horiz<=100)
         menu->SetActiveMenu(true);
   else if(horiz>=980)

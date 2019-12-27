@@ -29,5 +29,7 @@ void cMainMenu::SetActiveMenu(bool ActiveItemOne){
         LCD->clear();
         LCD->setCursor(5,0);
         LCD->print("Arcade");
+        delay(1000);
+        cSnake snake(LCD);
       }
   }
