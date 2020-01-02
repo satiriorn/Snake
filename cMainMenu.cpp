@@ -11,25 +11,27 @@ void cMainMenu::Welcome(){
   delay(1000);
   DoMenu();
   }
+  
 void cMainMenu::DoMenu(){
   LCD->clear();
   LCD->setCursor(0,0);
   LCD->print("Choose an item");
   LCD->setCursor(0,1);
   LCD->print("Arcade or Training");
-  LCD->clear();
   }
 void cMainMenu::SetActiveMenu(bool ActiveItemOne){
     if(ActiveItemOne){
         LCD->clear();
         LCD->setCursor(5,0);
         LCD->print("Training");
+        delay(1000);
+        LCD->clear();          
       }
     else{
         LCD->clear();
         LCD->setCursor(5,0);
         LCD->print("Arcade");
         delay(1000);
-        cSnake snake(LCD);
+        LCD->clear();
       }
   }
