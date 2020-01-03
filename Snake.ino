@@ -32,7 +32,6 @@ void loop() {
   if(horiz<=100&&Active==false){
         menu->SetActiveMenu(false);
         Active =true;
-        
         }
   else if(horiz>=980&&Active==false){
         menu->SetActiveMenu(true);

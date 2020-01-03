@@ -20,9 +20,8 @@ class cSnake{
 
   private:
   const LiquidCrystal_I2C* LCD = nullptr;
-  int Vertical = 0;
-  int Horizontal = 0;
   int HorizontalLocation = 0;
   int VerticalLocation = 0;
+  int VertGlobal = 0;
  
     };
