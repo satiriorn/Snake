@@ -6,9 +6,8 @@
 class cSnake{
   public:
   cSnake(const LiquidCrystal_I2C* L);
+  virtual void Start();
   virtual void MoveSnake(int V = 0 , int H = 0);
-
-
 
   private:
     byte ByteSnake[8] = {
