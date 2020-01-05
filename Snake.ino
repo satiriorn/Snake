@@ -10,11 +10,14 @@ const int V = 1;
 const int H = 0;
 bool Active = false;
 int vert, horiz;
-cMainMenu *menu;
-cFood *food;
-cSnake *snake;
-cSnake Snake(LCD);
+
 cFood Food(LCD);
+cFood *food = &Food;
+
+cSnake Snake(LCD,food);
+cSnake *snake;
+
+cMainMenu *menu;
   
 void setup() {
   lcd.begin(); 
@@ -29,7 +32,6 @@ void loop() {
   horiz = analogRead(H);
   if(Active){
     if(food->SpawnFood){
-      food=&Food;
       food->GenerateFood();
     }
     snake = &Snake;

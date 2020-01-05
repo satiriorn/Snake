@@ -1,7 +1,8 @@
 #include "cSnake.h"
 
-cSnake::cSnake(const LiquidCrystal_I2C* L){
+cSnake::cSnake(const LiquidCrystal_I2C* L,const cFood* F){
   LCD = L;
+  Food = F;
  }
 
 void cSnake::MoveSnake(int V, int H){
@@ -20,6 +21,7 @@ void cSnake::MoveRight(){
       HorizontalLocation++;
       ByteSnake[VerticalLocation]=16;
       LCD->clear();
+      Food->ReturnFood();
       LCD->setCursor(HorizontalLocation,VertGlobal);
     }
     else{
@@ -38,9 +40,10 @@ void cSnake::MoveLeft(){
     else if(ByteSnake[VerticalLocation]==0){
            ByteSnake[VerticalLocation] = 1;
            LCD->clear(); 
+           Food->ReturnFood();
+           LCD->setCursor(HorizontalLocation,VertGlobal);
     }
     else{
-      LCD->clear();
       LCD->setCursor(HorizontalLocation,VertGlobal);
       ByteSnake[VerticalLocation] = ByteSnake[VerticalLocation]<<1;
     }
@@ -56,6 +59,7 @@ void cSnake::MoveDown(){
       VerticalLocation=0;
       VertGlobal++;
       LCD->clear();
+      Food->ReturnFood();
       Time=0;
     }
     else
@@ -73,6 +77,7 @@ void cSnake::MoveUp(){
         VerticalLocation=7;
         VertGlobal--;
         LCD->clear();
+        Food->ReturnFood();
         Time=0;
       }
     else

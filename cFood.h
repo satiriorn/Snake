@@ -7,6 +7,7 @@ class cFood{
   public:
     cFood(const LiquidCrystal_I2C* L);
     void GenerateFood();
+    void ReturnFood();
     bool SpawnFood = true;
   private:
     int getRandomNumber(int Min, int Max);
@@ -16,14 +17,14 @@ class cFood{
     int CursorLocationH = 0;
     int RandomPixelLocation = 0;
         byte Foods[8] = {
-  B00000,
-  B00000,
-  B00000,
-  B00000,
-  B00000,
-  B00000,
-  B00000,
-};
+        B00000,
+        B00000,
+        B00000,
+        B00000,
+        B00000,
+        B00000,
+        B00000,
+     };
     
     
   };
