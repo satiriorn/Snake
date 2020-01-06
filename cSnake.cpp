@@ -7,6 +7,10 @@ cSnake::cSnake(const LiquidCrystal_I2C* L,const cFood* F){
 
 void cSnake::MoveSnake(int V, int H){
   LCD->createChar(0,ByteSnake); 
+  if(Food->CursorLocationV==VertGlobal&&Food->CursorLocationH==HorizontalLocation){
+    
+    
+    }
   if(H>900&&V>400&&V<600)
     MoveRight(); 
    else if(H<100&&V>400&&V<600)

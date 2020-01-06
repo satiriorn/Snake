@@ -15,7 +15,8 @@ void cFood::GenerateFood(){
     CursorLocationV = getRandomNumber(0,1);
     CursorLocationH = getRandomNumber(1,15);
     RandomPixelLocation = mass[getRandomNumber(0,4)];
-    Foods[1] = RandomPixelLocation;
+    arrLocation = getRandomNumber(0,8);
+    Foods[arrLocation] = RandomPixelLocation;
     LCD->createChar(1,Foods); 
     LCD->setCursor(CursorLocationH, CursorLocationV);
     LCD->write(byte(1));
