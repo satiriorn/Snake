@@ -20,6 +20,7 @@ class cSnake{
   B00000,
   B00000,
 };
+  byte* BSnake = ByteSnake;
   const LiquidCrystal_I2C* LCD = nullptr;
   const cWorld* World= nullptr;
   int HorizontalLocation = 0;

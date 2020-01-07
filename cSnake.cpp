@@ -15,6 +15,7 @@ void cSnake::MoveSnake(int V, int H){
     MoveDown();
    else if(V<100&&H>400&&H<600)
     MoveUp();
+   World->CheckWorld(VertGlobal, HorizontalLocation, BSnake, VerticalLocation);
   }
 void cSnake::MoveRight(){
   if(ByteSnake[VerticalLocation]==0){
@@ -27,7 +28,7 @@ void cSnake::MoveRight(){
       ByteSnake[VerticalLocation] = ByteSnake[VerticalLocation]>>1;
     }
     LCD->write(byte(0));
-    delay(800);
+    delay(400);
 }
 void cSnake::MoveLeft(){
   if(ByteSnake[VerticalLocation]==16){
@@ -36,14 +37,14 @@ void cSnake::MoveLeft(){
     }  
     else if(ByteSnake[VerticalLocation]==0){
            ByteSnake[VerticalLocation] = 1;
-           World->DrawingUnits(true,HorizontalLocation, VertGlobal);
+           World->DrawingUnits(true, HorizontalLocation, VertGlobal);
     }
     else{
       LCD->setCursor(HorizontalLocation,VertGlobal);
       ByteSnake[VerticalLocation] = ByteSnake[VerticalLocation]<<1;
     }
     LCD->write(byte(0));
-    delay(800);
+    delay(400);
   }
 void cSnake::MoveDown(){
     int Time=800;
