@@ -14,8 +14,11 @@ int vert, horiz;
 cFood Food(LCD);
 cFood *food = &Food;
 
-cSnake Snake(LCD,food);
-cSnake *snake;
+cWorld World(LCD,food);
+cWorld *world = &World;
+
+cSnake Snake(LCD,world);
+cSnake *snake = &Snake;;
 
 cMainMenu *menu;
   
@@ -34,7 +37,6 @@ void loop() {
     if(food->SpawnFood){
       food->GenerateFood();
     }
-    snake = &Snake;
     snake->Start();
     snake->MoveSnake(vert,horiz);
     }

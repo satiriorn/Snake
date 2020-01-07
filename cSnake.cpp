@@ -1,16 +1,12 @@
 #include "cSnake.h"
 
-cSnake::cSnake(const LiquidCrystal_I2C* L,const cFood* F){
+cSnake::cSnake(const LiquidCrystal_I2C* L, const cWorld* W){
   LCD = L;
-  Food = F;
+  World = W;
  }
 
 void cSnake::MoveSnake(int V, int H){
   LCD->createChar(0,ByteSnake); 
-  if(Food->CursorLocationV==VertGlobal&&Food->CursorLocationH==HorizontalLocation){
-    
-    
-    }
   if(H>900&&V>400&&V<600)
     MoveRight(); 
    else if(H<100&&V>400&&V<600)
@@ -24,15 +20,12 @@ void cSnake::MoveRight(){
   if(ByteSnake[VerticalLocation]==0){
       HorizontalLocation++;
       ByteSnake[VerticalLocation]=16;
-      LCD->clear();
-      Food->ReturnFood();
-      LCD->setCursor(HorizontalLocation,VertGlobal);
+      World->DrawingUnits(true, HorizontalLocation, VertGlobal);
     }
     else{
       LCD->setCursor(HorizontalLocation,VertGlobal);
       ByteSnake[VerticalLocation] = ByteSnake[VerticalLocation]>>1;
     }
-    Serial.print(ByteSnake[VerticalLocation]);
     LCD->write(byte(0));
     delay(800);
 }
@@ -43,15 +36,12 @@ void cSnake::MoveLeft(){
     }  
     else if(ByteSnake[VerticalLocation]==0){
            ByteSnake[VerticalLocation] = 1;
-           LCD->clear(); 
-           Food->ReturnFood();
-           LCD->setCursor(HorizontalLocation,VertGlobal);
+           World->DrawingUnits(true,HorizontalLocation, VertGlobal);
     }
     else{
       LCD->setCursor(HorizontalLocation,VertGlobal);
       ByteSnake[VerticalLocation] = ByteSnake[VerticalLocation]<<1;
     }
-    Serial.print(ByteSnake[VerticalLocation]);
     LCD->write(byte(0));
     delay(800);
   }
@@ -62,8 +52,7 @@ void cSnake::MoveDown(){
     if(VerticalLocation==7){
       VerticalLocation=0;
       VertGlobal++;
-      LCD->clear();
-      Food->ReturnFood();
+      World->DrawingUnits();
       Time=0;
     }
     else
@@ -73,6 +62,7 @@ void cSnake::MoveDown(){
     LCD->write(byte(0));
     delay(Time);
   }
+  
 void cSnake::MoveUp(){
     byte a = ByteSnake[VerticalLocation];
     int Time = 800;
@@ -80,8 +70,7 @@ void cSnake::MoveUp(){
     if(VerticalLocation==0){
         VerticalLocation=7;
         VertGlobal--;
-        LCD->clear();
-        Food->ReturnFood();
+        World->DrawingUnits();
         Time=0;
       }
     else
@@ -91,6 +80,7 @@ void cSnake::MoveUp(){
     LCD->write(byte(0));
     delay(Time);
   }
+  
 void cSnake::Start(){
     LCD->createChar(0,ByteSnake);
     LCD->setCursor(HorizontalLocation,VertGlobal); 
