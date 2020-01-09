@@ -11,13 +11,4 @@ class cWorld{
   private:
   const LiquidCrystal_I2C* LCD = nullptr;
   const cFood* Food = nullptr;
-      byte Test[8] = {
-  B01001,
-  B00000,
-  B00000,
-  B00000,
-  B00000,
-  B00000,
-  B00000,
-};
   };

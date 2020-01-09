@@ -20,18 +20,27 @@ void cMainMenu::DoMenu(){
   LCD->print("Arcade or Training");
   }
 void cMainMenu::SetActiveMenu(bool ActiveItemOne){
-    if(ActiveItemOne){
-        LCD->clear();
-        LCD->setCursor(5,0);
-        LCD->print("Training");
-        delay(1000);
-        LCD->clear();          
-      }
-    else{
-        LCD->clear();
-        LCD->setCursor(5,0);
-        LCD->print("Arcade");
-        delay(1000);
-        LCD->clear();
-      }
+  if(ActiveItemOne){
+      LCD->clear();
+      LCD->setCursor(5,0);
+      LCD->print("Training");
+      delay(1000);
+      LCD->clear();          
+    }
+  else{
+      LCD->clear();
+      LCD->setCursor(5,0);
+      LCD->print("Arcade");
+      delay(1000);
+      LCD->clear();
+    }
+  }
+
+void cMainMenu::GameOver(){
+    LCD->clear();
+    LCD->setCursor(5,0);
+    LCD->print("Game Over");
+    delay(3000);
+    LCD->clear();
+    DoMenu();     
   }

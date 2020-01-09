@@ -23,9 +23,7 @@ class cFood{
         B00000,
      };
   private:
-    int getRandomNumber(int Min, int Max);
+    int RandomNumber(const int& value);
     const LiquidCrystal_I2C* LCD = nullptr;
     int mass[5]={16,4,8,2,1};
-
-
   };

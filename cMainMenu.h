@@ -7,8 +7,10 @@ class cMainMenu{
   public:
       cMainMenu(const LiquidCrystal_I2C* L);
       virtual void SetActiveMenu(bool active);
+      virtual void GameOver();
   private:
-    virtual void Welcome();
-    virtual void DoMenu();
-    const LiquidCrystal_I2C* LCD = nullptr;
+      virtual void Welcome();
+      virtual void DoMenu();
+    
+      const LiquidCrystal_I2C* LCD = nullptr;
     };
