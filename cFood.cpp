@@ -12,9 +12,9 @@ int cFood::RandomNumber(const int& value){
 void cFood::GenerateFood(){
     CursorLocationV = RandomNumber(random(0,2));
     CursorLocationH = RandomNumber(random(1,15));
-    RandomPixelLocation = mass[RandomNumber(random(0,4))];
+    RandomPixelLocation = RandomNumber(random(0,4));
     arrLocation = RandomNumber(random(0,8));
-    Foods[arrLocation] = RandomPixelLocation;
+    Foods[arrLocation] |= (1<<RandomPixelLocation);
     LCD->createChar(1,Foods); 
     LCD->setCursor(CursorLocationH, CursorLocationV);
     LCD->write(byte(1));

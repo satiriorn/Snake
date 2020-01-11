@@ -8,6 +8,7 @@ cSnake::cSnake(const LiquidCrystal_I2C* L, const cWorld* W){
 void cSnake::MoveSnake(int V, int H){
   LCD->createChar(0,ByteSnake); 
   World->CheckWorld(VertGlobal, HorizontalLocation, BSnake, VerticalLocation);
+  Time=400;
   if(H>900&&V>400&&V<600)
     MoveRight(); 
    else if(H<100&&V>400&&V<600)
@@ -18,39 +19,43 @@ void cSnake::MoveSnake(int V, int H){
     MoveUp();
   }
 void cSnake::MoveRight(){
-  if(ByteSnake[VerticalLocation]==0){
+  if(HorizLocal==0){
+      Time = 90;
+      ByteSnake[VerticalLocation]&= ~(1 << HorizLocal);
+      HorizLocal=4;
       HorizontalLocation++;
-      ByteSnake[VerticalLocation]=16;
       World->DrawingUnits(true, HorizontalLocation, VertGlobal);
+      ByteSnake[VerticalLocation]|= 1<<HorizLocal;
     }
     else{
       LCD->setCursor(HorizontalLocation,VertGlobal);
-      ByteSnake[VerticalLocation] = ByteSnake[VerticalLocation]>>1;
+      ByteSnake[VerticalLocation]&= ~(1 << HorizLocal);
+      HorizLocal--;
+      ByteSnake[VerticalLocation]|= 1<<HorizLocal;
     }
     LCD->write(byte(0));
-    //World->DrawingUnits(true, HorizontalLocation, VertGlobal);
-    delay(400);
+    delay(Time);
 }
 void cSnake::MoveLeft(){
-  if(ByteSnake[VerticalLocation]==16){
+  if(HorizLocal == 4){
+      Time = 90;
       HorizontalLocation--;
-      ByteSnake[VerticalLocation]=0;   
-    }  
-    else if(ByteSnake[VerticalLocation]==0){
-       ByteSnake[VerticalLocation] = 1;
-       World->DrawingUnits(true, HorizontalLocation, VertGlobal);
+      ByteSnake[VerticalLocation]&= ~(1 << HorizLocal);   
+      HorizLocal = 0;
+      World->DrawingUnits(true, HorizontalLocation, VertGlobal);
+      ByteSnake[VerticalLocation]|= 1<<HorizLocal;
     }
     else{
       LCD->setCursor(HorizontalLocation,VertGlobal);
-      ByteSnake[VerticalLocation] = ByteSnake[VerticalLocation]<<1;
+      ByteSnake[VerticalLocation]&= ~(1 << HorizLocal);
+      HorizLocal++;
+      ByteSnake[VerticalLocation]|= 1<<HorizLocal;
     }
     LCD->write(byte(0));
-    delay(400);
+    delay(Time);
   }
 void cSnake::MoveDown(){
-    int Time=400;
-    byte a = ByteSnake[VerticalLocation];
-    ByteSnake[VerticalLocation] = 0;
+    ByteSnake[VerticalLocation]&= ~(1 << HorizLocal);   
     if(VerticalLocation==7){
       VerticalLocation=0;
       VertGlobal++;
@@ -59,16 +64,14 @@ void cSnake::MoveDown(){
     }
     else
       VerticalLocation++;
-    ByteSnake[VerticalLocation] = a;  
+    ByteSnake[VerticalLocation]|= 1<<HorizLocal;
     LCD->setCursor(HorizontalLocation,VertGlobal);
     LCD->write(byte(0));
     delay(Time);
   }
   
 void cSnake::MoveUp(){
-    byte a = ByteSnake[VerticalLocation];
-    int Time = 400;
-    ByteSnake[VerticalLocation] = 0;
+    ByteSnake[VerticalLocation]&= ~(1 << HorizLocal);   
     if(VerticalLocation==0){
         VerticalLocation=7;
         VertGlobal--;
@@ -77,7 +80,7 @@ void cSnake::MoveUp(){
       }
     else
         VerticalLocation--;
-    ByteSnake[VerticalLocation] = a;
+    ByteSnake[VerticalLocation]|= 1<<HorizLocal;
     LCD->setCursor(HorizontalLocation,VertGlobal);
     LCD->write(byte(0));
     delay(Time);

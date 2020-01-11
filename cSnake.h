@@ -23,10 +23,12 @@ class cSnake{
   B00000,
   B00000,
 };
+  int Time = 0;
   byte* BSnake = ByteSnake;
   const LiquidCrystal_I2C* LCD = nullptr;
   const cWorld* World= nullptr;
   int VerticalLocation = 0;
+  int HorizLocal = 4;
 
   void MoveRight();
   void MoveLeft();

@@ -25,5 +25,4 @@ class cFood{
   private:
     int RandomNumber(const int& value);
     const LiquidCrystal_I2C* LCD = nullptr;
-    int mass[5]={16,4,8,2,1};
   };
