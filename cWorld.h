@@ -8,6 +8,8 @@ class cWorld{
   cWorld(const LiquidCrystal_I2C* L,const cFood* F);
   void DrawingUnits(bool Horintal=false, const int &HorizontalLocation = 0, const int &VertGlobal = 0);
   void CheckWorld(const int &VertGloval,const int &HorizontalLocation, byte* ByteSnake, const int &VerticalLocation);
+  bool GameOver = false;
+  
   private:
   const LiquidCrystal_I2C* LCD = nullptr;
   const cFood* Food = nullptr;

@@ -9,10 +9,10 @@ class cFood{
     void GenerateFood();
     void ReturnFood();
     bool SpawnFood = true;
-    int CursorLocationV = 0;
-    int CursorLocationH = 0;
-    int arrLocation = 0;
-    int RandomPixelLocation = 0;
+    int CursorLocationV;
+    int CursorLocationH;
+    int arrLocation;
+    int RandomPixelLocation;
     byte Foods[8] = {
         B00000,
         B00000,
@@ -23,6 +23,6 @@ class cFood{
         B00000,
      };
   private:
-    int RandomNumber(const int& value);
+
     const LiquidCrystal_I2C* LCD = nullptr;
   };

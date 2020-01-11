@@ -8,10 +8,11 @@ class cSnake{
   public:
   cSnake(const LiquidCrystal_I2C* L, const cWorld* W);
   virtual void Start();
+  virtual void Again();
   virtual void MoveSnake(int V = 0 , int H = 0);
-  int HorizontalLocation = 0;
-  int VertGlobal = 0;
-  int LongSnake = 1;
+  int HorizontalLocation; 
+  int VertGlobal;
+  
   
   private:
     byte ByteSnake[8] = {
@@ -23,12 +24,15 @@ class cSnake{
   B00000,
   B00000,
 };
-  int Time = 0;
+  int LongSnake;
+  int Time;
+  int VerticalLocation;
+  int HorizLocal;
+  
   byte* BSnake = ByteSnake;
   const LiquidCrystal_I2C* LCD = nullptr;
-  const cWorld* World= nullptr;
-  int VerticalLocation = 0;
-  int HorizLocal = 4;
+  const cWorld* World = nullptr;
+
   void MoveRight();
   void MoveLeft();
   void MoveDown();

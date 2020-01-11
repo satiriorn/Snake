@@ -3,14 +3,12 @@
 
 cFood::cFood(const LiquidCrystal_I2C* L){
     LCD=L;
+    CursorLocationV = CursorLocationH = arrLocation = RandomPixelLocation = 0;
     randomSeed(analogRead(0));
   }
-int cFood::RandomNumber(const int& value){
-   srand(time(NULL));
-   return 1 + rand() % value;
-  }
+  
 void cFood::GenerateFood(){
-  if(CursorLocationH>0){
+  if(CursorLocationH > 0){
     Foods[arrLocation]&= ~(1 << RandomPixelLocation);
     }
     CursorLocationV = random(0,1);
