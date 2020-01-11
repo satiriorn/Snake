@@ -10,10 +10,13 @@ int cFood::RandomNumber(const int& value){
    return 1 + rand() % value;
   }
 void cFood::GenerateFood(){
-    CursorLocationV = RandomNumber(random(0,2));
-    CursorLocationH = RandomNumber(random(1,15));
-    RandomPixelLocation = RandomNumber(random(0,4));
-    arrLocation = RandomNumber(random(0,8));
+  if(CursorLocationH>0){
+    Foods[arrLocation]&= ~(1 << RandomPixelLocation);
+    }
+    CursorLocationV = random(0,1);
+    CursorLocationH =random(1,15);
+    RandomPixelLocation = random(0,4);
+    arrLocation = random(0,8);
     Foods[arrLocation] |= (1<<RandomPixelLocation);
     LCD->createChar(1,Foods); 
     LCD->setCursor(CursorLocationH, CursorLocationV);

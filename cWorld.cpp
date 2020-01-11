@@ -19,9 +19,9 @@ void cWorld::DrawingUnits(bool Horizontal=false, const int &HorizontalLocation =
   
 void cWorld::CheckWorld(const int &VertGlobal,const int &HorizontalLocation, byte* ByteSnake, const int &VerticalLocation){
    if(Food->CursorLocationV==VertGlobal&&Food->CursorLocationH==HorizontalLocation){
-    if(VerticalLocation == Food->arrLocation){
-        //ByteSnake[VerticalLocation]+=Food->Foods[Food->arrLocation];
-      }
-      ByteSnake[Food->arrLocation] |= (1<<Food->RandomPixelLocation) ; 
+      ByteSnake[Food->arrLocation] |= (1<<Food->RandomPixelLocation); 
+      if(ByteSnake[VerticalLocation] == Food->Foods[Food->arrLocation]&&VerticalLocation==Food->arrLocation){
+        Food->GenerateFood();
+        }
     }
   }

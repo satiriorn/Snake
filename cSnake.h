@@ -29,7 +29,6 @@ class cSnake{
   const cWorld* World= nullptr;
   int VerticalLocation = 0;
   int HorizLocal = 4;
-
   void MoveRight();
   void MoveLeft();
   void MoveDown();

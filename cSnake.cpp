@@ -20,9 +20,9 @@ void cSnake::MoveSnake(int V, int H){
   }
 void cSnake::MoveRight(){
   if(HorizLocal==0){
-      Time = 90;
-      ByteSnake[VerticalLocation]&= ~(1 << HorizLocal);
-      HorizLocal=4;
+      Time = 50;
+      ByteSnake[VerticalLocation]&=~(1 << HorizLocal);
+      HorizLocal = 4;
       HorizontalLocation++;
       World->DrawingUnits(true, HorizontalLocation, VertGlobal);
       ByteSnake[VerticalLocation]|= 1<<HorizLocal;
@@ -38,7 +38,7 @@ void cSnake::MoveRight(){
 }
 void cSnake::MoveLeft(){
   if(HorizLocal == 4){
-      Time = 90;
+      Time = 50;
       HorizontalLocation--;
       ByteSnake[VerticalLocation]&= ~(1 << HorizLocal);   
       HorizLocal = 0;
@@ -85,7 +85,6 @@ void cSnake::MoveUp(){
     LCD->write(byte(0));
     delay(Time);
   }
-  
 void cSnake::Start(){
     LCD->createChar(0,ByteSnake);
     LCD->setCursor(HorizontalLocation,VertGlobal); 
