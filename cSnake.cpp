@@ -4,14 +4,18 @@ cSnake::cSnake(const LiquidCrystal_I2C* L, const cWorld* W){
   LCD = L;
   World = W;
   VerticalLocation = Time = HorizontalLocation = VertGlobal = 0;
-  LongSnake = 1;
-  HorizLocal = 4;
+  LongSnake =  1;
+  HorizLocal = TailSnake = 4;
  }
 
 void cSnake::MoveSnake(int V, int H){
   LCD->createChar(0,ByteSnake); 
-  World->CheckWorld(VertGlobal, HorizontalLocation, BSnake, VerticalLocation);
   Time=400;
+  World->CheckWorld(VertGlobal, HorizontalLocation, BSnake, VerticalLocation);
+  if(World->UpSnake){
+    LongSnake++;
+    ChangeSnake = true;
+    }
   if(H>900&&V>400&&V<600)
     MoveRight(); 
    else if(H<100&&V>400&&V<600)
@@ -20,21 +24,30 @@ void cSnake::MoveSnake(int V, int H){
     MoveDown();
    else if(V<100&&H>400&&H<600)
     MoveUp();
+
   }
   
 void cSnake::MoveRight(){
+
   if(HorizLocal==0){
       Time = 50;
-      ByteSnake[VerticalLocation]&=~(1 << HorizLocal);
-      HorizLocal = 4;
+      ByteSnake[VerticalLocation]&=~(1 << TailSnake);
+      HorizLocal = TailSnake = 4;
+      
       HorizontalLocation++;
       World->DrawingUnits(true, HorizontalLocation, VertGlobal);
       ByteSnake[VerticalLocation]|= 1<<HorizLocal;
     }
+    else if(ChangeSnake){
+      HorizLocal--;
+      ByteSnake[VerticalLocation]|= 1<<HorizLocal;
+      ChangeSnake = false;
+    }
     else{
       LCD->setCursor(HorizontalLocation,VertGlobal);
-      ByteSnake[VerticalLocation]&= ~(1 << HorizLocal);
+      ByteSnake[VerticalLocation]&= ~(1 << TailSnake);
       HorizLocal--;
+      TailSnake--;
       ByteSnake[VerticalLocation]|= 1<<HorizLocal;
     }
     LCD->write(byte(0));
@@ -99,6 +112,5 @@ void cSnake::Start(){
   }
 void cSnake::Again(){
     VerticalLocation = Time = HorizontalLocation = VertGlobal = 0;
-    
     Start();
   }

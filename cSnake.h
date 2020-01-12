@@ -13,7 +13,6 @@ class cSnake{
   int HorizontalLocation; 
   int VertGlobal;
   
-  
   private:
     byte ByteSnake[8] = {
   B10000,
@@ -28,6 +27,8 @@ class cSnake{
   int Time;
   int VerticalLocation;
   int HorizLocal;
+  int TailSnake;
+  bool ChangeSnake = false;
   
   byte* BSnake = ByteSnake;
   const LiquidCrystal_I2C* LCD = nullptr;

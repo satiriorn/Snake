@@ -18,14 +18,15 @@ void cWorld::DrawingUnits(bool Horizontal=false, const int &HorizontalLocation =
   }
   
 void cWorld::CheckWorld(const int &VertGlobal,const int &HorizontalLocation, byte* ByteSnake, const int &VerticalLocation){
-  Serial.print(HorizontalLocation);
+  UpSnake = false;
    if(Food->CursorLocationV==VertGlobal&&Food->CursorLocationH==HorizontalLocation){
       ByteSnake[Food->arrLocation] |= (1<<Food->RandomPixelLocation); 
       if(ByteSnake[VerticalLocation] == Food->Foods[Food->arrLocation]&&VerticalLocation==Food->arrLocation){
         Food->GenerateFood();
-        }
+        UpSnake = true;
+      }
     }
-   else if(VertGlobal==-1||VertGlobal==2||HorizontalLocation==-1||HorizontalLocation ==16){
+   else if(VertGlobal == -1||VertGlobal == 2||HorizontalLocation == -1||HorizontalLocation == 16){
        GameOver = true;
       }
   }

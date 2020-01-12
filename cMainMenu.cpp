@@ -44,3 +44,11 @@ void cMainMenu::GameOver(){
     LCD->clear();
     DoMenu();     
   }
+
+void cMainMenu::Win(){
+    LCD->clear();
+    LCD->setCursor(5,0);
+    LCD->print("You Win!");
+    delay(3000);
+    DoMenu();
+  }

@@ -8,6 +8,7 @@ class cMainMenu{
       cMainMenu(const LiquidCrystal_I2C* L);
       virtual void SetActiveMenu(bool active);
       virtual void GameOver();
+      virtual void Win();
   private:
       virtual void Welcome();
       virtual void DoMenu();

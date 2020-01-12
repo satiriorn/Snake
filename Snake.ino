@@ -1,9 +1,12 @@
+#include <Password.h>
 #include <LiquidCrystal_I2C.h>
 #include <Wire.h>
 #include "cSnake.h"
 #include "cMainMenu.h"
 #include "cFood.h"
-
+char a = "dasdasd";
+char * j = &a;
+Password jopa(j);
 LiquidCrystal_I2C lcd (0x27,16,2);
 const LiquidCrystal_I2C *LCD = &lcd;
 const int V = 1;
@@ -28,9 +31,12 @@ void setup() {
   lcd.backlight();
   cMainMenu Menu(LCD);
   menu = &Menu;
+
+  
 }
 
-void loop() {    
+void loop() {  
+  jopa.reset();  
   vert = analogRead(V);
   horiz = analogRead(H);
   if(Active){

@@ -13,7 +13,7 @@ void cFood::GenerateFood(){
     }
     CursorLocationV = random(0,1);
     CursorLocationH =random(1,15);
-    RandomPixelLocation = random(0,4);
+    RandomPixelLocation = 4;//random(0,4);
     arrLocation = random(0,8);
     Foods[arrLocation] |= (1<<RandomPixelLocation);
     LCD->createChar(1,Foods); 
