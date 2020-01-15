@@ -7,6 +7,7 @@ cSnake::cSnake(const LiquidCrystal_I2C* L, cWorld* W){
   LongSnake =  1;
   HeadSnake = TailSnake = 4;
  }
+ 
 inline void cSnake::Clear(){
   World->WorldBlocks[HorizontalLocation][VerticalLocation] &=~ (1<<TailSnake);
   }
@@ -34,7 +35,6 @@ void cSnake::MoveSnake(const int& V,const int& H){
   }
   
 void cSnake::MoveRight(){
-  
   if(HeadSnake==0){
       Time = 50;
       Clear();
@@ -49,8 +49,8 @@ void cSnake::MoveRight(){
       ChangeSnake = false;
     }
     else{
-      LCD->setCursor(HorizontalLocation,VertGlobal);
       Clear();
+      LCD->setCursor(HorizontalLocation,VertGlobal);
       HeadSnake--;
       TailSnake--;
       Drawing();

@@ -51,14 +51,18 @@ void loop() {
       Active = false;
       }
     }
-  if(horiz<=100&&Active==false){
-        menu->SetActiveMenu(false);
-        Active =true;
-        snake->Again();
-        }
-  else if(horiz>=980&&Active==false){
-        menu->SetActiveMenu(true);
-        Active = true;
-        snake->Again();
-  }  
+    ChooseMenu();
 }
+
+void ChooseMenu(){
+  if(horiz<=100&&Active==false){
+      menu->SetActiveMenu(false);
+      Active =true;
+      snake->Again();
+    }
+  else if(horiz>=980&&Active==false){
+      menu->SetActiveMenu(true);
+      Active = true;
+      snake->Again();
+    } 
+  }
