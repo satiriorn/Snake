@@ -1,6 +1,6 @@
 #include "cWorld.h"
 
-cWorld::cWorld(const LiquidCrystal_I2C* L,const cFood* F){
+cWorld::cWorld(const LiquidCrystal_I2C* L, const cFood* F){
     LCD = L;
     Food = F;
   }
@@ -16,6 +16,15 @@ void cWorld::DrawingUnits(bool Horizontal=false, const int &HorizontalLocation =
       Food->ReturnFood();
     }
   }
+void cWorld::CreateWorld(const int &ScaleH, const int &ScaleV){
+  int x = ScaleH*ScaleV;
+    for(int i = 0; i<=x;i++){
+      for(int j = 0; j<8; j++){
+        WorldBlocks[i][j] = B00000;
+        }
+    }
+    Create = false;
+  }
   
 void cWorld::CheckWorld(const int &VertGlobal,const int &HorizontalLocation, byte* ByteSnake, const int &VerticalLocation){
   UpSnake = false;
@@ -30,3 +39,4 @@ void cWorld::CheckWorld(const int &VertGlobal,const int &HorizontalLocation, byt
        GameOver = true;
       }
   }
+  

@@ -1,10 +1,13 @@
-#include "cSnake.h"
 #include <LiquidCrystal_I2C.h>
+#include "cSnake.h"
 #include "cMainMenu.h"
 #include "cFood.h"
 
-LiquidCrystal_I2C lcd (0x27,16,2);
+const int ScaleLcdHorizontal = 16;
+const int ScaleLcdVertical = 2;
+LiquidCrystal_I2C lcd (0x27, ScaleLcdHorizontal, ScaleLcdVertical);
 const LiquidCrystal_I2C *LCD = &lcd;
+
 const int V = 1;
 const int H = 0;
 bool Active = false;
@@ -27,18 +30,20 @@ void setup() {
   lcd.backlight();
   cMainMenu Menu(LCD);
   menu = &Menu;
-
   
 }
 
-void loop() {    
+void loop() {  
   vert = analogRead(V);
   horiz = analogRead(H);
   if(Active){
+    if(world->Create){
+      world->CreateWorld(ScaleLcdHorizontal, ScaleLcdVertical);
+      snake->Start();
+    }
     if(food->SpawnFood){
       food->GenerateFood();
     }
-    snake->Start();
     snake->MoveSnake(vert,horiz);
     if(world->GameOver){
       world->GameOver=false;

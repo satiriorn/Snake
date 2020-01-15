@@ -9,26 +9,14 @@ class cWorld{
   cWorld(const LiquidCrystal_I2C* L,const cFood* F);
   void DrawingUnits(bool Horintal=false, const int &HorizontalLocation = 0, const int &VertGlobal = 0);
   void CheckWorld(const int &VertGloval,const int &HorizontalLocation, byte* ByteSnake, const int &VerticalLocation);
+  void CreateWorld(const int &ScaleH, const int &ScaleV);
   bool GameOver = false;
   bool UpSnake = false;
+  bool Create = true;
+  byte WorldBlocks[32][8];
+  
   private:
   const LiquidCrystal_I2C* LCD = nullptr;
   const cFood* Food = nullptr;
-  byte WorldBlocks[16][8] = {
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000},
-  {B00000,B00000,B00000,B00000,B00000,B00000,B00000}};
+
   };
