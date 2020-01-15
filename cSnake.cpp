@@ -70,7 +70,8 @@ void cSnake::MoveLeft(){
     }
     else{
       LCD->setCursor(HorizontalLocation,VertGlobal);
-      World->WorldBlocks[HorizontalLocation][VerticalLocation]&= ~(1 << TailSnake);
+      Clear();
+      TailSnake++;
       HeadSnake++;
       Drawing();
     }
