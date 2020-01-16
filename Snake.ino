@@ -3,15 +3,15 @@
 #include "cMainMenu.h"
 #include "cFood.h"
 
-const int ScaleLcdHorizontal = 16;
-const int ScaleLcdVertical = 2;
+const uint8_t ScaleLcdHorizontal = 16;
+const uint8_t ScaleLcdVertical = 2;
 LiquidCrystal_I2C lcd (0x27, ScaleLcdHorizontal, ScaleLcdVertical);
 const LiquidCrystal_I2C *LCD = &lcd;
 
-const int V = 1;
-const int H = 0;
+const uint8_t V = 1;
+const uint8_t H = 0;
 bool Active = false;
-int vert, horiz;
+int16_t vert, horiz;
 
 cFood Food(LCD);
 cFood *food = &Food;

@@ -10,17 +10,17 @@ class cSnake{
   virtual void Start();
   virtual void Again();
   virtual void MoveSnake(const int& V,const int& H);
-  int HorizontalLocation; 
-  int VertGlobal;
+  uint8_t HorizontalLocation; 
+  uint8_t VertGlobal;
   
   private:
   inline void Clear();
   inline void Drawing();
-  int LongSnake;
-  int Time;
-  int VerticalLocation;
-  int HeadSnake;
-  int TailSnake;
+  uint8_t LongSnake;
+  uint16_t Time;
+  uint8_t VerticalLocation;
+  uint8_t HeadSnake;
+  uint8_t TailSnake;
   bool ChangeSnake = false;
   const LiquidCrystal_I2C* LCD = nullptr;
   cWorld* World = nullptr;

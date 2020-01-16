@@ -9,10 +9,10 @@ class cFood{
     void GenerateFood();
     void ReturnFood();
     bool SpawnFood = true;
-    int CursorLocationV;
-    int CursorLocationH;
-    int arrLocation;
-    int RandomPixelLocation;
+    uint8_t CursorLocationV;
+    uint8_t CursorLocationH;
+    uint8_t arrLocation;
+    uint8_t RandomPixelLocation;
     byte Foods[8] = {
         B00000,
         B00000,

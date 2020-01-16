@@ -5,7 +5,7 @@ cWorld::cWorld(const LiquidCrystal_I2C* L, const cFood* F){
     Food = F;
   }
   
-void cWorld::DrawingUnits(bool Horizontal=false, const int &HorizontalLocation = 0, const int &VertGlobal = 0){
+void cWorld::DrawingUnits(bool Horizontal=false, const uint8_t &HorizontalLocation = 0, const uint8_t &VertGlobal = 0){
   if(Horizontal){
     LCD->clear();
     Food->ReturnFood();
@@ -16,17 +16,17 @@ void cWorld::DrawingUnits(bool Horizontal=false, const int &HorizontalLocation =
       Food->ReturnFood();
     }
   }
-void cWorld::CreateWorld(const int &ScaleH, const int &ScaleV){
+void cWorld::CreateWorld(const uint8_t &ScaleH, const uint8_t &ScaleV){
   int x = ScaleH*ScaleV;
-    for(int i = 0; i<=x;i++){
-      for(int j = 0; j<8; j++){
+    for(uint8_t i = 0; i<=x;i++){
+      for(uint8_t j = 0; j<8; j++){
         WorldBlocks[i][j] = B00000;
         }
     }
     Create = false;
   }
   
-void cWorld::CheckWorld(const int &VertGlobal,const int &HorizontalLocation, byte* ByteSnake, const int &VerticalLocation){
+void cWorld::CheckWorld(const uint8_t &VertGlobal,const uint8_t &HorizontalLocation, byte* ByteSnake, const uint8_t &VerticalLocation){
   UpSnake = false;
    if(Food->CursorLocationV==VertGlobal&&Food->CursorLocationH==HorizontalLocation){
       ByteSnake[Food->arrLocation] |= (1<<Food->RandomPixelLocation); 
