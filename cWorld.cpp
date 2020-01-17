@@ -7,12 +7,11 @@ cWorld::cWorld(const LiquidCrystal_I2C* L, const cFood* F){
   
 void cWorld::DrawingUnits(bool Horizontal=false, const uint8_t &HorizontalLocation = 0, const uint8_t &VertGlobal = 0){
   if(Horizontal){
-    LCD->clear();
-    Food->ReturnFood();
+    //LCD->clear();
+    //Food->ReturnFood();
     LCD->setCursor(HorizontalLocation,VertGlobal);
   }
   else{
-      LCD->clear();
       Food->ReturnFood();
     }
   }

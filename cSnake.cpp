@@ -17,7 +17,6 @@ inline void cSnake::Drawing(){
   }
   
 void cSnake::MoveSnake(const int& V,const int& H){
-  LCD->createChar(0,World->WorldBlocks[HorizontalLocation]);
   Time=400;
   //World->CheckWorld(VertGlobal, HorizontalLocation, BSnake, VerticalLocation);
   if(World->UpSnake){
@@ -32,17 +31,26 @@ void cSnake::MoveSnake(const int& V,const int& H){
     MoveDown();
    else if(V<100&&H>400&&H<600)
     MoveUp();
+   Serial.print(World->WorldBlocks[0][0]);
+   LCD->createChar(0,World->WorldBlocks[HorizontalLocation]);
+   LCD->setCursor(HorizontalLocation,VertGlobal);
+   LCD->write(byte(0));
+   delay(Time);
   }
   
 void cSnake::MoveRight(){
   if(HeadSnake==0){
       Time = 50;
       Clear();
-      HeadSnake = TailSnake = 4;
+      HeadSnake = 4;
+      LCD->setCursor(HorizontalLocation,VertGlobal);
       HorizontalLocation++;
-      World->DrawingUnits(true, HorizontalLocation, VertGlobal);
       Drawing();
     }
+    else if(TailSnake==0){
+      Clear();
+      TailSnake = 4;
+      }
     else if(ChangeSnake){
       HeadSnake--;
       Drawing();
@@ -50,13 +58,10 @@ void cSnake::MoveRight(){
     }
     else{
       Clear();
-      LCD->setCursor(HorizontalLocation,VertGlobal);
-      HeadSnake--;
       TailSnake--;
+      HeadSnake--;
       Drawing();
     }
-    LCD->write(byte(0));
-    delay(Time);
 }
 
 void cSnake::MoveLeft(){
@@ -75,8 +80,6 @@ void cSnake::MoveLeft(){
       HeadSnake++;
       Drawing();
     }
-    LCD->write(byte(0));
-    delay(Time);
   }
   
 void cSnake::MoveDown(){
@@ -91,8 +94,6 @@ void cSnake::MoveDown(){
       VerticalLocation++;
     Drawing();
     LCD->setCursor(HorizontalLocation,VertGlobal);
-    LCD->write(byte(0));
-    delay(Time);
   }
   
 void cSnake::MoveUp(){
@@ -107,8 +108,6 @@ void cSnake::MoveUp(){
         VerticalLocation--;
     Drawing();
     LCD->setCursor(HorizontalLocation,VertGlobal);
-    LCD->write(byte(0));
-    delay(Time);
   }
 
 void cSnake::Start(){
@@ -117,6 +116,7 @@ void cSnake::Start(){
     World->WorldBlocks[0][0]|= 1<<4;
     LCD->write(byte(0));
   }
+  
 void cSnake::Again(){
     VerticalLocation = Time = HorizontalLocation = VertGlobal = 0;
     Start();
