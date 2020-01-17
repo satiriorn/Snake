@@ -31,63 +31,59 @@ void cSnake::MoveSnake(const int& V,const int& H){
     MoveDown();
    else if(V<100&&H>400&&H<600)
     MoveUp();
-   Serial.print(World->WorldBlocks[0][0]);
    LCD->createChar(0,World->WorldBlocks[HorizontalLocation]);
    LCD->setCursor(HorizontalLocation,VertGlobal);
    LCD->write(byte(0));
    delay(Time);
   }
   
+void cSnake::CheckHead(){
+   Clear();
+   (HeadSnake==4)? HorizontalLocation-- :HorizontalLocation++;
+   HeadSnake = (HeadSnake==4)? 0 : 4;
+   Serial.print(HorizontalLocation);
+   LCD->setCursor(HorizontalLocation,VertGlobal);
+   Drawing();
+  }
+  
+void cSnake::CheckTail(){
+    Clear();
+    LCD->clear();
+    TailSnake = 4;
+  }
+  
 void cSnake::MoveRight(){
-  if(HeadSnake==0){
-      Time = 50;
-      Clear();
-      HeadSnake = 4;
-      LCD->setCursor(HorizontalLocation,VertGlobal);
-      HorizontalLocation++;
-      Drawing();
-    }
-    else if(TailSnake==0){
-      Clear();
-      TailSnake = 4;
-      }
-    else if(ChangeSnake){
-      HeadSnake--;
-      Drawing();
-      ChangeSnake = false;
-    }
-    else{
-      Clear();
-      TailSnake--;
-      HeadSnake--;
-      Drawing();
-    }
+  if(TailSnake==0)
+    CheckTail();
+  if(HeadSnake==0)
+    CheckHead();
+  else{
+    Clear();
+    TailSnake--;
+    HeadSnake--;
+    Drawing();
+  }
 }
 
 void cSnake::MoveLeft(){
-  if(HeadSnake == 4){
-      Time = 50;
-      HorizontalLocation--;
-      Clear();   
-      HeadSnake = 0;
-      World->DrawingUnits(true, HorizontalLocation, VertGlobal);
-      Drawing();
-    }
-    else{
-      LCD->setCursor(HorizontalLocation,VertGlobal);
-      Clear();
-      TailSnake++;
-      HeadSnake++;
-      Drawing();
-    }
+  if(TailSnake==4)
+    CheckTail(); 
+  if(HeadSnake == 4)
+    CheckHead();
+  else{ 
+    Clear();
+    TailSnake++;
+    HeadSnake++;
+    Drawing();
   }
-  
+}
+ 
 void cSnake::MoveDown(){
     Clear();  
     if(VerticalLocation==7){
       VerticalLocation=0;
       VertGlobal++;
-      World->DrawingUnits();
+     // World->DrawingUnits();
       Time=0;
     }
     else
@@ -101,7 +97,7 @@ void cSnake::MoveUp(){
     if(VerticalLocation==0){
         VerticalLocation=7;
         VertGlobal--;
-        World->DrawingUnits();
+        //World->DrawingUnits();
         Time=0;
       }
     else

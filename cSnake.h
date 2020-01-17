@@ -21,10 +21,16 @@ class cSnake{
   uint8_t VerticalLocation;
   uint8_t HeadSnake;
   uint8_t TailSnake;
+  uint8_t MaxValue;
+  uint8_t MinValue;
   bool ChangeSnake = false;
+  
   const LiquidCrystal_I2C* LCD = nullptr;
   cWorld* World = nullptr;
-
+  
+  void CheckHead();
+  void CheckTail();
+  
   void MoveRight();
   void MoveLeft();
   void MoveDown();

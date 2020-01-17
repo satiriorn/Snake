@@ -44,9 +44,6 @@ void loop() {
     if(food->SpawnFood){
       food->GenerateFood();
     }
-    if(!vert||!horiz){
-      Serial.print("asdasd");
-      }
     snake->MoveSnake(vert,horiz);
     if(world->GameOver){
       world->GameOver=false;
