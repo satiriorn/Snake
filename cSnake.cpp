@@ -39,17 +39,21 @@ void cSnake::MoveSnake(const int& V,const int& H){
   
 void cSnake::CheckHead(){
    Clear();
-   (HeadSnake==4)? HorizontalLocation-- :HorizontalLocation++;
-   HeadSnake = (HeadSnake==4)? 0 : 4;
-   Serial.print(HorizontalLocation);
+   (HeadSnake==MaxValue) ? HorizontalLocation-- : HorizontalLocation++;
+   HeadSnake = (HeadSnake==MaxValue) ? MinValue : MaxValue;
    LCD->setCursor(HorizontalLocation,VertGlobal);
    Drawing();
   }
   
+void cSnake::CheckGlobalVertical(){
+      (VerticalLocation==MinValue) ? VertGlobal-- : VertGlobal++;
+      VerticalLocation =(VerticalLocation == 7) ? MinValue : 7; 
+      LCD->clear();
+  }
 void cSnake::CheckTail(){
     Clear();
     LCD->clear();
-    TailSnake = 4;
+    TailSnake = (TailSnake==MaxValue) ? MinValue : MaxValue;
   }
   
 void cSnake::MoveRight(){
@@ -80,12 +84,8 @@ void cSnake::MoveLeft(){
  
 void cSnake::MoveDown(){
     Clear();  
-    if(VerticalLocation==7){
-      VerticalLocation=0;
-      VertGlobal++;
-     // World->DrawingUnits();
-      Time=0;
-    }
+    if(VerticalLocation==7)
+      CheckGlobalVertical();
     else
       VerticalLocation++;
     Drawing();
@@ -94,14 +94,10 @@ void cSnake::MoveDown(){
   
 void cSnake::MoveUp(){
     Clear();
-    if(VerticalLocation==0){
-        VerticalLocation=7;
-        VertGlobal--;
-        //World->DrawingUnits();
-        Time=0;
-      }
+    if(VerticalLocation==0)
+      CheckGlobalVertical();
     else
-        VerticalLocation--;
+      VerticalLocation--;
     Drawing();
     LCD->setCursor(HorizontalLocation,VertGlobal);
   }
