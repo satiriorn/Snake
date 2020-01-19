@@ -46,9 +46,9 @@ void cSnake::CheckHead(){
   }
   
 void cSnake::CheckGlobalVertical(){
-      (VerticalLocation==MinValue) ? VertGlobal-- : VertGlobal++;
-      VerticalLocation =(VerticalLocation == 7) ? MinValue : 7; 
-      LCD->clear();
+    (VerticalLocation==MinValue) ? VertGlobal-- : VertGlobal++;
+    VerticalLocation =(VerticalLocation == 7) ? MinValue : 7; 
+    LCD->clear();
   }
 void cSnake::CheckTail(){
     Clear();
@@ -105,8 +105,9 @@ void cSnake::MoveUp(){
 void cSnake::Start(){
     LCD->createChar(0,World->WorldBlocks[0]);
     LCD->setCursor(HorizontalLocation,VertGlobal); 
-    World->WorldBlocks[0][0]|= 1<<4;
+    World->WorldBlocks[0][0]|= 1<<MaxValue;
     LCD->write(byte(0));
+    
   }
   
 void cSnake::Again(){

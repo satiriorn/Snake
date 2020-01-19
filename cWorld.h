@@ -6,10 +6,11 @@
 
 class cWorld{
   public:
-  cWorld(const LiquidCrystal_I2C* L,const cFood* F);
+  cWorld(const LiquidCrystal_I2C* L, const cFood* F);
   void DrawingUnits(bool Horintal=false, const uint8_t &HorizontalLocation = 0, const uint8_t &VertGlobal = 0);
   void CheckWorld(const uint8_t &VertGloval,const uint8_t &HorizontalLocation, byte* ByteSnake, const uint8_t &VerticalLocation);
   void CreateWorld(const uint8_t &ScaleH, const uint8_t &ScaleV);
+  void MergeFood();
   bool GameOver = false;
   bool UpSnake = false;
   bool Create = true;

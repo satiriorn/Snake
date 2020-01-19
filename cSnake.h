@@ -13,7 +13,6 @@ class cSnake{
   uint8_t HorizontalLocation; 
   uint8_t VertGlobal;
 
-  
   private:
   inline void Clear();
   inline void Drawing();

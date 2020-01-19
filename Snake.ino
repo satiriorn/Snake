@@ -38,11 +38,9 @@ void loop() {
   horiz = analogRead(H);
   if(Active){
     if(world->Create){
+      food->GenerateFood();
       world->CreateWorld(ScaleLcdHorizontal, ScaleLcdVertical);
       snake->Start();
-    }
-    if(food->SpawnFood){
-      food->GenerateFood();
     }
     snake->MoveSnake(vert,horiz);
     if(world->GameOver){
