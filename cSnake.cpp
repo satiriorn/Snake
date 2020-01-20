@@ -54,6 +54,7 @@ void cSnake::CheckTail(){
     Clear();
     LCD->clear();
     TailSnake = (TailSnake==MaxValue) ? MinValue : MaxValue;
+    World->DrawingUnits();
   }
   
 void cSnake::MoveRight(){
@@ -103,9 +104,9 @@ void cSnake::MoveUp(){
   }
 
 void cSnake::Start(){
+    World->WorldBlocks[0][0]|= 1<<MaxValue;
     LCD->createChar(0,World->WorldBlocks[0]);
     LCD->setCursor(HorizontalLocation,VertGlobal); 
-    World->WorldBlocks[0][0]|= 1<<MaxValue;
     LCD->write(byte(0));
     
   }

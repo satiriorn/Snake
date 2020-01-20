@@ -3,15 +3,15 @@
 #include "cMainMenu.h"
 #include "cFood.h"
 
-const uint8_t ScaleLcdHorizontal = 16;
-const uint8_t ScaleLcdVertical = 2;
+const int ScaleLcdHorizontal = 16;
+const int ScaleLcdVertical = 2;
 LiquidCrystal_I2C lcd (0x27, ScaleLcdHorizontal, ScaleLcdVertical);
 const LiquidCrystal_I2C *LCD = &lcd;
 
-const uint8_t V = 1;
-const uint8_t H = 0;
+const int V = 1;
+const int H = 0;
 bool Active = false;
-int16_t vert, horiz;
+int vert, horiz;
 
 cFood Food(LCD);
 cFood *food = &Food;
@@ -37,8 +37,10 @@ void loop() {
   vert = analogRead(V);
   horiz = analogRead(H);
   if(Active){
-    if(world->Create){
+     if(food->SpawnFood){
       food->GenerateFood();
+    }
+    if(world->Create){
       world->CreateWorld(ScaleLcdHorizontal, ScaleLcdVertical);
       snake->Start();
     }
@@ -47,20 +49,15 @@ void loop() {
       world->GameOver=false;
       menu->GameOver();
       Active = false;
+      snake->Again();
       }
     }
-    ChooseMenu();
-}
-
-void ChooseMenu(){
   if(horiz<=100&&Active==false){
-      menu->SetActiveMenu(false);
-      Active =true;
-      snake->Again();
-    }
+        menu->SetActiveMenu(false);
+        Active =true;
+        }
   else if(horiz>=980&&Active==false){
-      menu->SetActiveMenu(true);
-      Active = true;
-      snake->Again();
-    } 
-  }
+        menu->SetActiveMenu(true);
+        Active = true; 
+  }  
+}
