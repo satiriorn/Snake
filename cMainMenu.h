@@ -1,6 +1,7 @@
 #pragma once
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
+#include "cWorld.h"
 
 class cMainMenu{
   public:
@@ -11,6 +12,6 @@ class cMainMenu{
   private:
       virtual void Welcome();
       virtual void DoMenu();
-    
+      cWorld *World = nullptr;
       const LiquidCrystal_I2C* LCD = nullptr;
     };

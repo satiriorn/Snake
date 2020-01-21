@@ -1,20 +1,22 @@
 #pragma once
 #include <Arduino.h>
+#include "cWorld.h"
 #include <LiquidCrystal_I2C.h>
-#include "stdlib.h"
+
+
 
 class cFood{
   public:
-    cFood(const LiquidCrystal_I2C* L);
+    cFood(const LiquidCrystal_I2C* L,const cWorld* W);
     void GenerateFood();
-    void ReturnFood();
+    void Drawing();
     bool SpawnFood = true;
+
+  private:
+    const LiquidCrystal_I2C* LCD = nullptr;
+    cWorld* World = nullptr;
     uint8_t FoodLocationV;
     uint8_t FoodLocationH;
     uint8_t VerticalLocalFood;
     uint8_t RandomFoodLocation;
-    byte Foods[8] = {B00000,B00000,B00000,B00000,B00000,B00000,B00000,B00000};
-    
-  private:
-    const LiquidCrystal_I2C* LCD = nullptr;
   };

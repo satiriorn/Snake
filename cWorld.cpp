@@ -1,35 +1,34 @@
 #include "cWorld.h"
 
 
-
-cWorld::cWorld(const LiquidCrystal_I2C* L, const cFood* F){
+cWorld::cWorld(const LiquidCrystal_I2C* L){
     LCD = L;
-    Food = F;
   }
   
 void cWorld::CreateWorld(const uint8_t &ScaleH, const uint8_t &ScaleV){
-  int x = ScaleH*ScaleV;
-    for(uint8_t i = 0; i<=x;i++){
-      for(uint8_t j = 0; j<8; j++){
+  uint8_t x = ScaleH*ScaleV;
+    for(uint8_t i = 0; i<=28;i++)
+      for(uint8_t j = 0; j<8; j++)
         WorldBlocks[i][j] = B00000;
-        }}
     Create = false;
   }
   
-void cWorld::MergeFood(){
-    WorldBlocks[Food->FoodLocationH][Food->VerticalLocalFood] += Food->Foods[Food->VerticalLocalFood];
+void cWorld::GetValueFood(const uint8_t& FoodLocationV, const uint8_t& FoodLocationH,const uint8_t& RandomFoodLocation,const uint8_t& VerticalLocalFood){
+ 
+  FLV = &FoodLocationV;
+  FLH = &FoodLocationH;
+  RLV = &RandomFoodLocation;
+  VLF = &VerticalLocalFood;
   }
-     
-void cWorld::DrawingUnits(){
-    Food->ReturnFood();
+  
+void cWorld::ReturnFood(){
+  LCD->setCursor(*FLH, *FLV);
+  LCD->write(byte(1));
   }
-/*
+/*  
 void cWorld::CheckWorld(const uint8_t &VertGlobal,const uint8_t &HorizontalLocation, byte* ByteSnake, const uint8_t &VerticalLocation){
   UpSnake = false;
-   if(Food->FoodLocationV==VertGlobal&&Food->FoodLocationH==HorizontalLocation){
-      ByteSnake[Food->VerticalLocalFood] |= (1<<Food->RandomFoodLocation); 
-      if(WorldBlocks[VerticalLocation] == WorldBlocks[Food->VerticalLocalFood]&&VerticalLocation==Food->VerticalLocalFood){
-        Food->GenerateFood();
+   if()
         UpSnake = true;
       }
     }
@@ -37,4 +36,4 @@ void cWorld::CheckWorld(const uint8_t &VertGlobal,const uint8_t &HorizontalLocat
        GameOver = true;
       }
   }
-*/
+  */

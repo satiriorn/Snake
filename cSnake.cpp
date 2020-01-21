@@ -49,12 +49,13 @@ void cSnake::CheckGlobalVertical(){
     (VerticalLocation==MinValue) ? VertGlobal-- : VertGlobal++;
     VerticalLocation =(VerticalLocation == 7) ? MinValue : 7; 
     LCD->clear();
+    World->ReturnFood();
   }
 void cSnake::CheckTail(){
     Clear();
     LCD->clear();
     TailSnake = (TailSnake==MaxValue) ? MinValue : MaxValue;
-    World->DrawingUnits();
+    World->ReturnFood();
   }
   
 void cSnake::MoveRight(){

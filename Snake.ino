@@ -2,6 +2,7 @@
 #include "cSnake.h"
 #include "cMainMenu.h"
 #include "cFood.h"
+#include "cWorld.h"
 
 const int ScaleLcdHorizontal = 16;
 const int ScaleLcdVertical = 2;
@@ -13,11 +14,11 @@ const int H = 0;
 bool Active = false;
 int vert, horiz;
 
-cFood Food(LCD);
-cFood *food = &Food;
-
-cWorld World(LCD,food);
+cWorld World(LCD);
 cWorld *world = &World;
+
+cFood Food(LCD, world);
+cFood *food = &Food;
 
 cSnake Snake(LCD,world);
 cSnake *snake = &Snake;;
@@ -37,12 +38,12 @@ void loop() {
   vert = analogRead(V);
   horiz = analogRead(H);
   if(Active){
-     if(food->SpawnFood){
-      food->GenerateFood();
-    }
-    if(world->Create){
+     if(world->Create){
       world->CreateWorld(ScaleLcdHorizontal, ScaleLcdVertical);
       snake->Start();
+    }
+     if(food->SpawnFood){
+      food->GenerateFood();
     }
     snake->MoveSnake(vert,horiz);
     if(world->GameOver){
