@@ -59,6 +59,8 @@ void cSnake::CheckTail(){
   }
   
 void cSnake::MoveRight(){
+  if(ChangeSnake)
+    UpSnake(true);
   if(TailSnake==0)
     CheckTail();
   if(HeadSnake==0)
@@ -72,6 +74,8 @@ void cSnake::MoveRight(){
 }
 
 void cSnake::MoveLeft(){
+  if(ChangeSnake)
+    UpSnake();
   if(TailSnake==4)
     CheckTail(); 
   if(HeadSnake == 4)
@@ -103,7 +107,11 @@ void cSnake::MoveUp(){
     Drawing();
     LCD->setCursor(HorizontalLocation,VertGlobal);
   }
-
+void cSnake::UpSnake(bool Horizontal = false){
+    (Horizontal)?HeadSnake--:HeadSnake++;
+    Drawing();
+    ChangeSnake = false;
+  }
 void cSnake::Start(){
     World->WorldBlocks[0][0]|= 1<<MaxValue;
     LCD->createChar(0,World->WorldBlocks[0]);

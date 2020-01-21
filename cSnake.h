@@ -3,6 +3,8 @@
 #include "cWorld.h"
 #include <LiquidCrystal_I2C.h>
 
+#define MaxValue 4
+#define MinValue 0
 
 class cSnake{
   public:
@@ -16,14 +18,12 @@ class cSnake{
   private:
   inline void Clear();
   inline void Drawing();
+  void UpSnake(bool Horizontal = false);
   uint8_t LongSnake;
   uint16_t Time;
   uint8_t VerticalLocation;
   uint8_t HeadSnake;
   uint8_t TailSnake;
-  
-  const uint8_t MaxValue = 4;
-  const uint8_t MinValue = 0;
   
   bool ChangeSnake = false;
   

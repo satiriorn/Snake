@@ -31,7 +31,7 @@ void cWorld::ReturnFood(){
 void cWorld::CheckWorld(const uint8_t &VertGlobal,const uint8_t &HorizontalLocation, const uint8_t &VerticalLocation, const uint8_t &HeadSnake){
   UpSnake = false;
    if(VertGlobal == *FLV && HorizontalLocation == *FLH && VerticalLocation == *VLF && HeadSnake == *RLV){
-        SpawnFood = true;
+        SpawnFood = UpSnake = true; 
     }
    else if(VertGlobal == -1||VertGlobal == 2||HorizontalLocation == -1||HorizontalLocation == 16){
        GameOver = true;
