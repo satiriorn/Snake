@@ -2,7 +2,9 @@
 
 
 cWorld::cWorld(const LiquidCrystal_I2C* L){
-    LCD = L;
+  LCD = L;
+  GameOver = UpSnake = false;
+  SpawnFood = Create = true;
   }
   
 void cWorld::CreateWorld(const uint8_t &ScaleH, const uint8_t &ScaleV){
@@ -14,26 +16,24 @@ void cWorld::CreateWorld(const uint8_t &ScaleH, const uint8_t &ScaleV){
   }
   
 void cWorld::GetValueFood(const uint8_t& FoodLocationV, const uint8_t& FoodLocationH,const uint8_t& RandomFoodLocation,const uint8_t& VerticalLocalFood){
- 
   FLV = &FoodLocationV;
   FLH = &FoodLocationH;
   RLV = &RandomFoodLocation;
   VLF = &VerticalLocalFood;
+  SpawnFood = false;
   }
   
 void cWorld::ReturnFood(){
   LCD->setCursor(*FLH, *FLV);
   LCD->write(byte(1));
   }
-/*  
-void cWorld::CheckWorld(const uint8_t &VertGlobal,const uint8_t &HorizontalLocation, byte* ByteSnake, const uint8_t &VerticalLocation){
+  
+void cWorld::CheckWorld(const uint8_t &VertGlobal,const uint8_t &HorizontalLocation, const uint8_t &VerticalLocation, const uint8_t &HeadSnake){
   UpSnake = false;
-   if()
-        UpSnake = true;
-      }
+   if(VertGlobal == *FLV && HorizontalLocation == *FLH && VerticalLocation == *VLF && HeadSnake == *RLV){
+        SpawnFood = true;
     }
    else if(VertGlobal == -1||VertGlobal == 2||HorizontalLocation == -1||HorizontalLocation == 16){
        GameOver = true;
       }
   }
-  */

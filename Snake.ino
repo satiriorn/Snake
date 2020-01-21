@@ -42,7 +42,7 @@ void loop() {
       world->CreateWorld(ScaleLcdHorizontal, ScaleLcdVertical);
       snake->Start();
     }
-     if(food->SpawnFood){
+     if(world->SpawnFood){
       food->GenerateFood();
     }
     snake->MoveSnake(vert,horiz);

@@ -16,7 +16,6 @@ void cFood::GenerateFood(){
     RandomFoodLocation = random(0,4);
     VerticalLocalFood = random(0,8);
     Drawing();
-    SpawnFood = false;
     World->GetValueFood(FoodLocationV, FoodLocationH, RandomFoodLocation, VerticalLocalFood);
 }
 

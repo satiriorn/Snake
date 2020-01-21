@@ -5,14 +5,15 @@
 class cWorld{
   public:
   cWorld(const LiquidCrystal_I2C* L);
-  void CheckWorld(const uint8_t &VertGloval,const uint8_t &HorizontalLocation, byte* ByteSnake, const uint8_t &VerticalLocation);
+  void CheckWorld(const uint8_t &VertGlobal,const uint8_t &HorizontalLocation, const uint8_t &VerticalLocation, const uint8_t &HeadSnake);
   void CreateWorld(const uint8_t &ScaleH, const uint8_t &ScaleV);
   void ReturnFood();
   void GetValueFood(const uint8_t& FoodLocationV, const uint8_t& FoodLocationH,const uint8_t& RandomFoodLocation,const uint8_t& VerticalLocalFood);
   void MergeFood();
-  bool GameOver = false;
-  bool UpSnake = false;
+  bool GameOver;
+  bool UpSnake;
   bool Create = true;
+  bool SpawnFood;
   byte WorldBlocks[32][8];
   
   private:

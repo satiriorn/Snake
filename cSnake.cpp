@@ -18,7 +18,7 @@ inline void cSnake::Drawing(){
   
 void cSnake::MoveSnake(const int& V,const int& H){
   Time=400;
-  //World->CheckWorld(VertGlobal, HorizontalLocation, BSnake, VerticalLocation);
+  World->CheckWorld(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
   if(World->UpSnake){
     LongSnake++;
     ChangeSnake = true;

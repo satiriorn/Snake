@@ -10,7 +10,6 @@ class cFood{
     cFood(const LiquidCrystal_I2C* L,const cWorld* W);
     void GenerateFood();
     void Drawing();
-    bool SpawnFood = true;
 
   private:
     const LiquidCrystal_I2C* LCD = nullptr;
