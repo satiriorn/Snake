@@ -9,8 +9,8 @@ const int ScaleLcdVertical = 2;
 LiquidCrystal_I2C lcd (0x27, ScaleLcdHorizontal, ScaleLcdVertical);
 const LiquidCrystal_I2C *LCD = &lcd;
 
-const int V = 1;
-const int H = 0;
+const int V = 2;
+const int H = 1;
 bool Active = false;
 int vert, horiz;
 

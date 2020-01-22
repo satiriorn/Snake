@@ -19,7 +19,10 @@ class cSnake{
   inline void Clear();
   inline void Drawing();
   void UpSnake(bool Horizontal = false);
+  void VisibleArea();
+  void ClearVisibleArea();
   uint8_t LongSnake;
+  uint8_t SpeedSnake;
   uint16_t Time;
   uint8_t VerticalLocation;
   uint8_t HeadSnake;

@@ -18,7 +18,7 @@ void cMainMenu::DoMenu(){
   LCD->print("Choose an item");
   LCD->setCursor(0,1);
   LCD->print("Arcade or Training");
-  }
+}
   
 void cMainMenu::SetActiveMenu(bool ActiveItemOne){
   if(ActiveItemOne){
