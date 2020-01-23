@@ -29,6 +29,7 @@ class cSnake{
   uint8_t TailSnake;
   
   bool ChangeSnake = false;
+  bool Make = false;
   
   const LiquidCrystal_I2C* LCD = nullptr;
   cWorld* World = nullptr;

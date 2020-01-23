@@ -18,7 +18,6 @@ void cFood::GenerateFood(){
 }
 
 void cFood::Drawing(){
-  Serial.print(9);
   World->WorldBlocks[FoodLocationH][VerticalLocalFood]|= (1<<RandomFoodLocation); 
   LCD->createChar(1,World->WorldBlocks[FoodLocationH]);
   LCD->setCursor(FoodLocationH, FoodLocationV);
