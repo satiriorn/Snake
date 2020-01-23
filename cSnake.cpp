@@ -6,15 +6,15 @@ cSnake::cSnake(const LiquidCrystal_I2C* L, cWorld* W){
   VerticalLocation = Time = HorizontalLocation = VertGlobal = 0;
   LongSnake =  1;
   HeadSnake = TailSnake = 4;
- }
+}
  
 inline void cSnake::Clear(){
   World->WorldBlocks[HorizontalLocation][VerticalLocation] &=~ (1<<TailSnake);
-  }
+}
   
 inline void cSnake::Drawing(){
   World->WorldBlocks[HorizontalLocation][VerticalLocation]|= 1<<HeadSnake;
-  }
+}
   
 void cSnake::MoveSnake(const int& V,const int& H){
   Time=200;
@@ -36,7 +36,7 @@ void cSnake::MoveSnake(const int& V,const int& H){
    LCD->setCursor(HorizontalLocation,VertGlobal);
    LCD->write(byte(0));
    delay(Time);
-  }
+}
 void cSnake::VisibleArea(){
    LCD->createChar(2,World->WorldBlocks[HorizontalLocation-1]);
    LCD->setCursor(HorizontalLocation-1,VertGlobal);
@@ -44,40 +44,44 @@ void cSnake::VisibleArea(){
    LCD->createChar(3,World->WorldBlocks[HorizontalLocation+1]);
    LCD->setCursor(HorizontalLocation+1,VertGlobal);
    LCD->write(byte(3));*/
-  }
+}
 void cSnake::ClearVisibleArea(){
   World->WorldBlocks[HorizontalLocation-1][VerticalLocation] = B00000;
-  }
+  VisibleArea();
+}
   
 void cSnake::CheckHead(){
-   Clear();
-   (HeadSnake==MaxValue) ? HorizontalLocation-- : HorizontalLocation++;
-   HeadSnake = (HeadSnake==MaxValue) ? MinValue : MaxValue;
-   LCD->setCursor(HorizontalLocation,VertGlobal);
-   Drawing();
-  }
+  LCD->clear();
+  Clear();
+  World->ReturnFood();
+  (HeadSnake==MaxValue) ? HorizontalLocation-- : HorizontalLocation++;
+  HeadSnake = (HeadSnake==MaxValue) ? MinValue : MaxValue;
+  LCD->setCursor(HorizontalLocation,VertGlobal);
+  Drawing();
+}
   
 void cSnake::CheckGlobalVertical(){
   (VerticalLocation==MinValue) ? VertGlobal-- : VertGlobal++;
   VerticalLocation =(VerticalLocation == 7) ? MinValue : 7; 
   LCD->clear();
   World->ReturnFood();
-  }
+}
   
 void cSnake::CheckTail(){
-  LCD->clear();
   Clear();
+  LCD->clear();
   TailSnake = (TailSnake==MaxValue) ? MinValue : MaxValue;
   World->ReturnFood();
-  }
+}
   
 void cSnake::MoveRight(){
   if(ChangeSnake)
     UpSnake(true);
-  else if(TailSnake==0){
+  if(TailSnake==0){
+    ClearVisibleArea();
     CheckTail();
     }
-  else if(HeadSnake==0){
+  if(HeadSnake==0){
     CheckHead();
     }
   else{
@@ -91,10 +95,10 @@ void cSnake::MoveRight(){
 void cSnake::MoveLeft(){
   if(ChangeSnake)
     UpSnake();
-  else if(TailSnake==4){
+  if(TailSnake==4){
     CheckTail(); 
   }
-  else if(HeadSnake == 4)
+  if(HeadSnake == 4)
     CheckHead();
   else{ 
     Clear();
