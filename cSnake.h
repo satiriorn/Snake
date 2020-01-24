@@ -18,7 +18,7 @@ class cSnake{
   private:
   inline void Clear();
   inline void Drawing();
-  inline void ClearVisibleArea();
+  inline void ClearVisibleArea(int8_t h = 0);
 
   uint8_t LongSnake;
   uint8_t SpeedSnake;
