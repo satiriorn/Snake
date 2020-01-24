@@ -19,7 +19,7 @@ void cFood::GenerateFood(){
 
 void cFood::Drawing(){
   World->WorldBlocks[FoodLocationH][VerticalLocalFood]|= (1<<RandomFoodLocation); 
-  LCD->createChar(1,World->WorldBlocks[FoodLocationH]);
+  LCD->createChar(7,World->WorldBlocks[FoodLocationH]);
   LCD->setCursor(FoodLocationH, FoodLocationV);
-  LCD->write(byte(1)); 
+  LCD->write(byte(7)); 
 }

@@ -12,15 +12,14 @@ class cSnake{
   virtual void Start();
   virtual void Again();
   virtual void MoveSnake(const int& V,const int& H);
-  uint8_t HorizontalLocation; 
-  uint8_t VertGlobal;
+  int8_t HorizontalLocation; 
+  int8_t VertGlobal;
 
   private:
   inline void Clear();
   inline void Drawing();
-  void UpSnake(bool Horizontal = false);
-  void VisibleArea();
-  void ClearVisibleArea();
+  inline void ClearVisibleArea();
+
   uint8_t LongSnake;
   uint8_t SpeedSnake;
   uint16_t Time;
@@ -37,7 +36,8 @@ class cSnake{
   void CheckGlobalVertical();
   void CheckHead();
   void CheckTail();
-  
+  void UpSnake(bool Horizontal = false);
+  void VisibleArea();
   void MoveRight();
   void MoveLeft();
   void MoveDown();

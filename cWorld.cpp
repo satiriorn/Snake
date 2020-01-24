@@ -25,7 +25,7 @@ void cWorld::GetValueFood(const uint8_t& FoodLocationV, const uint8_t& FoodLocat
   
 void cWorld::ReturnFood(){
   LCD->setCursor(*FLH, *FLV);
-  LCD->write(byte(1));
+  LCD->write(byte(7));
 }
   
 void cWorld::CheckWorld(const uint8_t &VertGlobal,const uint8_t &HorizontalLocation, const uint8_t &VerticalLocation, const uint8_t &HeadSnake){

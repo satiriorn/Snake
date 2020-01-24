@@ -8,16 +8,13 @@ cSnake::cSnake(const LiquidCrystal_I2C* L, cWorld* W){
   HeadSnake = TailSnake = 4;
 }
  
-inline void cSnake::Clear(){
-  World->WorldBlocks[HorizontalLocation][VerticalLocation] &=~ (1<<TailSnake);
-}
-  
-inline void cSnake::Drawing(){
-  World->WorldBlocks[HorizontalLocation][VerticalLocation]|= 1<<HeadSnake;
-}
-  
+inline void cSnake::Clear(){World->WorldBlocks[HorizontalLocation][VerticalLocation] &=~ (1<<TailSnake);}  
+inline void cSnake::Drawing(){World->WorldBlocks[HorizontalLocation][VerticalLocation]|= 1<<HeadSnake;}
+inline void cSnake::ClearVisibleArea(){World->WorldBlocks[HorizontalLocation-1][VerticalLocation] = B00000;} 
+
 void cSnake::MoveSnake(const int& V,const int& H){
   Time=200;
+  Make = false;
   World->CheckWorld(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
   if(World->UpSnake){
     LongSnake++;
@@ -32,26 +29,21 @@ void cSnake::MoveSnake(const int& V,const int& H){
    else if(V<100&&H>400&&H<600)
     MoveUp();
    VisibleArea();
-   LCD->createChar(0,World->WorldBlocks[HorizontalLocation]);
-   LCD->setCursor(HorizontalLocation,VertGlobal);
-   LCD->write(byte(0));
-   Serial.print(TailSnake);
-   Serial.print(HeadSnake);
    delay(Time);
 }
+
 void cSnake::VisibleArea(){
-   LCD->createChar(2,World->WorldBlocks[HorizontalLocation-1]);
-   LCD->setCursor(HorizontalLocation-1,VertGlobal);
-   LCD->write(byte(2));/*
-   LCD->createChar(3,World->WorldBlocks[HorizontalLocation+1]);
-   LCD->setCursor(HorizontalLocation+1,VertGlobal);
-   LCD->write(byte(3));*/
+  int8_t h = 0;
+  for(uint8_t i = 0; i<=2;i++){
+    h = (h==2&&HorizontalLocation>0)? h=-1:h; 
+    Serial.print(h);
+    LCD->createChar(i,World->WorldBlocks[HorizontalLocation+h]);
+    LCD->setCursor(HorizontalLocation+h,VertGlobal);
+    LCD->write(byte(i));
+    h++;
+  }
 }
-void cSnake::ClearVisibleArea(){
-  World->WorldBlocks[HorizontalLocation-1][VerticalLocation] = B00000;
-  VisibleArea();
-}
-  
+
 void cSnake::CheckHead(){
   LCD->clear();
   Clear();
@@ -75,10 +67,10 @@ void cSnake::CheckGlobalVertical(){
 }
   
 void cSnake::CheckTail(){
-  Clear();
   LCD->clear();
-  TailSnake = (TailSnake==MaxValue) ? MinValue : MaxValue;
   World->ReturnFood();
+  Clear();
+  TailSnake = (TailSnake==MaxValue) ? MinValue : MaxValue;
   if(LongSnake > 1 && TailSnake==MaxValue){
     HeadSnake--;
     Drawing();
@@ -91,7 +83,6 @@ void cSnake::CheckTail(){
 }
   
 void cSnake::MoveRight(){
-  Make = false;
   if(ChangeSnake)
     UpSnake(true);
   if(TailSnake==0){
@@ -113,10 +104,11 @@ void cSnake::MoveLeft(){
     UpSnake();
   if(TailSnake==4){
     CheckTail(); 
+    ClearVisibleArea();
   }
   if(HeadSnake == 4)
     CheckHead();
-  else{ 
+  else if(Make==false){ 
     Clear();
     TailSnake++;
     HeadSnake++;
@@ -132,7 +124,7 @@ void cSnake::MoveDown(){
       VerticalLocation++;
     Drawing();
     LCD->setCursor(HorizontalLocation,VertGlobal);
-  }
+}
   
 void cSnake::MoveUp(){
     Clear();
@@ -142,23 +134,22 @@ void cSnake::MoveUp(){
       VerticalLocation--;
     Drawing();
     LCD->setCursor(HorizontalLocation,VertGlobal);
-  }
+}
   
 void cSnake::UpSnake(bool Horizontal = false){
     (Horizontal)?HeadSnake--:HeadSnake++;
     Drawing();
     ChangeSnake = false;
-  }
+}
   
 void cSnake::Start(){
     World->WorldBlocks[0][0]|= 1<<MaxValue;
     LCD->createChar(0,World->WorldBlocks[0]);
     LCD->setCursor(HorizontalLocation,VertGlobal); 
-    LCD->write(byte(0));
-    
-  }
+    LCD->write(byte(0)); 
+}
   
 void cSnake::Again(){
     VerticalLocation = Time = HorizontalLocation = VertGlobal = 0;
     Start();
-  }
+}
