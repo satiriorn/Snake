@@ -10,7 +10,7 @@ cSnake::cSnake(const LiquidCrystal_I2C* L, cWorld* W){
  
 inline void cSnake::Clear(){World->WorldBlocks[HorizontalLocation][VerticalLocation] &=~ (1<<TailSnake);}  
 inline void cSnake::Drawing(){World->WorldBlocks[HorizontalLocation][VerticalLocation]|= 1<<HeadSnake;}
-inline void cSnake::ClearVisibleArea(int8_t h = 0){World->WorldBlocks[HorizontalLocation+h][VerticalLocation] = B00000;} 
+inline void cSnake::ClearVisibleArea(const int8_t& h = 0){World->WorldBlocks[HorizontalLocation+h][VerticalLocation] = B00000;} 
 
 void cSnake::MoveSnake(const int& V,const int& H){
   Time=200;
@@ -29,7 +29,6 @@ void cSnake::MoveSnake(const int& V,const int& H){
    else if(V<100&&H>400&&H<600)
     MoveUp();
    VisibleArea();
-   Serial.print(World->WorldBlocks[HorizontalLocation+1][1]);
    delay(Time);
 }
 
@@ -84,7 +83,7 @@ void cSnake::CheckTail(){
   
 void cSnake::MoveRight(){
   if(ChangeSnake)
-    UpSnake(true);
+    UpSnake(true,&HeadSnake);
   if(TailSnake==0){
     CheckTail();
     ClearVisibleArea(-1);
@@ -101,7 +100,7 @@ void cSnake::MoveRight(){
 
 void cSnake::MoveLeft(){
   if(ChangeSnake)
-    UpSnake();
+    UpSnake(false,&HeadSnake);
   if(TailSnake==4){
     CheckTail(); 
     ClearVisibleArea(1);
@@ -116,14 +115,17 @@ void cSnake::MoveLeft(){
   }
 }
  
-void cSnake::MoveDown(){
+void cSnake::MoveDown(){/*
+  if(ChangeSnake)
+    UpSnake(false,&VerticalLocation,true);*/
+  if(VerticalLocation==7)
+    CheckGlobalVertical();
+  else{
     Clear();  
-    if(VerticalLocation==7)
-      CheckGlobalVertical();
-    else
-      VerticalLocation++;
-    Drawing();
-    LCD->setCursor(HorizontalLocation,VertGlobal);
+    VerticalLocation++;
+  }
+  Drawing();
+  LCD->setCursor(HorizontalLocation,VertGlobal);
 }
   
 void cSnake::MoveUp(){
@@ -136,8 +138,8 @@ void cSnake::MoveUp(){
     LCD->setCursor(HorizontalLocation,VertGlobal);
 }
   
-void cSnake::UpSnake(bool Horizontal = false){
-    (Horizontal)?HeadSnake--:HeadSnake++;
+void cSnake::UpSnake(bool Horizontal = false,uint8_t* value = 0, bool Vertical = false){
+    *value = (Horizontal||Vertical)?*value-=1:*value+=1;
     Drawing();
     ChangeSnake = false;
 }

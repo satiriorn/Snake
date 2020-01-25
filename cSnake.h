@@ -18,7 +18,7 @@ class cSnake{
   private:
   inline void Clear();
   inline void Drawing();
-  inline void ClearVisibleArea(int8_t h = 0);
+  inline void ClearVisibleArea(const int8_t& h = 0);
 
   uint8_t LongSnake;
   uint8_t SpeedSnake;
@@ -36,7 +36,7 @@ class cSnake{
   void CheckGlobalVertical();
   void CheckHead();
   void CheckTail();
-  void UpSnake(bool Horizontal = false);
+  void UpSnake(bool Horizontal = false, uint8_t* value = 0, bool Vertical = false);
   void VisibleArea();
   void MoveRight();
   void MoveLeft();
