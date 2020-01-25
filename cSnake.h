@@ -36,10 +36,11 @@ class cSnake{
   void CheckGlobalVertical();
   void CheckHead();
   void CheckTail();
-  void UpSnake(bool Horizontal = false, uint8_t* value = 0, bool Vertical = false);
+  void UpSnake(bool Side = false, uint8_t* value = 0);
   void VisibleArea();
   void MoveRight();
   void MoveLeft();
   void MoveDown();
   void MoveUp();
+  void PreparationArea();
     };

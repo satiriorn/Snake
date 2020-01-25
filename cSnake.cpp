@@ -31,44 +31,9 @@ void cSnake::MoveSnake(const int& V,const int& H){
    VisibleArea();
    delay(Time);
 }
-
-void cSnake::VisibleArea(){
-  int8_t h = 0;
-  for(uint8_t i = 0; i<=2;i++){
-    h = (h==2&&HorizontalLocation>0)? h=-1:h; 
-    LCD->createChar(i,World->WorldBlocks[HorizontalLocation+h]);
-    LCD->setCursor(HorizontalLocation+h,VertGlobal);
-    LCD->write(byte(i));
-    h++;
-  }
-}
-
-void cSnake::CheckHead(){
-  LCD->clear();
-  Clear();
-  World->ReturnFood();
-  (HeadSnake==MaxValue) ? HorizontalLocation-- : HorizontalLocation++;
-  HeadSnake = (HeadSnake==MaxValue) ? MinValue : MaxValue;
-  if(LongSnake > 1 && HeadSnake==MaxValue)
-    TailSnake--;
-  else if(LongSnake > 1 && HeadSnake==MinValue)
-    TailSnake++;
-  LCD->setCursor(HorizontalLocation,VertGlobal);
-  Drawing();
-  Make = true;
-}
-  
-void cSnake::CheckGlobalVertical(){
-  (VerticalLocation==MinValue) ? VertGlobal-- : VertGlobal++;
-  VerticalLocation =(VerticalLocation == 7) ? MinValue : 7; 
-  LCD->clear();
-  World->ReturnFood();
-}
   
 void cSnake::CheckTail(){
-  LCD->clear();
-  World->ReturnFood();
-  Clear();
+  PreparationArea();
   TailSnake = (TailSnake==MaxValue) ? MinValue : MaxValue;
   if(LongSnake > 1 && TailSnake==MaxValue){
     HeadSnake--;
@@ -108,42 +73,74 @@ void cSnake::MoveLeft(){
   if(HeadSnake == 4)
     CheckHead();
   else if(Make==false){ 
-    Clear();
+    Clear(); 
     TailSnake++;
     HeadSnake++;
     Drawing();
   }
 }
  
-void cSnake::MoveDown(){/*
+void cSnake::MoveDown(){
   if(ChangeSnake)
-    UpSnake(false,&VerticalLocation,true);*/
-  if(VerticalLocation==7)
+    UpSnake(false,&VerticalLocation);
+  else if(VerticalLocation==7)
     CheckGlobalVertical();
   else{
     Clear();  
     VerticalLocation++;
+    Drawing();
   }
-  Drawing();
-  LCD->setCursor(HorizontalLocation,VertGlobal);
 }
   
 void cSnake::MoveUp(){
+  if(ChangeSnake)
+    UpSnake(true,&VerticalLocation);
+  if(VerticalLocation==0)
+    CheckGlobalVertical();
+  else{
     Clear();
-    if(VerticalLocation==0)
-      CheckGlobalVertical();
-    else
-      VerticalLocation--;
+    VerticalLocation--;
     Drawing();
-    LCD->setCursor(HorizontalLocation,VertGlobal);
+  }
 }
   
-void cSnake::UpSnake(bool Horizontal = false,uint8_t* value = 0, bool Vertical = false){
-    *value = (Horizontal||Vertical)?*value-=1:*value+=1;
+void cSnake::UpSnake(bool Side = false,uint8_t* value = 0){
+    *value = (Side)?*value-=1:*value+=1;
     Drawing();
     ChangeSnake = false;
 }
+
+void cSnake::VisibleArea(){
+  int8_t h = 0;
+  for(uint8_t i = 0; i<=2;i++){
+    h = (h==2&&HorizontalLocation>0)? h=-1:h; 
+    LCD->createChar(i,World->WorldBlocks[HorizontalLocation+h]);
+    LCD->setCursor(HorizontalLocation+h,VertGlobal);
+    LCD->write(byte(i));
+    h++;
+  }
+}
+
+void cSnake::CheckHead(){
+  PreparationArea();
+  (HeadSnake==MaxValue) ? HorizontalLocation-- : HorizontalLocation++;
+  HeadSnake = (HeadSnake==MaxValue) ? MinValue : MaxValue;
+  if(LongSnake > 1 && HeadSnake==MaxValue)
+    TailSnake--;
+  else if(LongSnake > 1 && HeadSnake==MinValue)
+    TailSnake++;
+  LCD->setCursor(HorizontalLocation,VertGlobal);
+  Drawing();
+  Make = true;
+}
   
+void cSnake::CheckGlobalVertical(){
+  (VerticalLocation==MinValue) ? VertGlobal-- : VertGlobal++;
+  VerticalLocation =(VerticalLocation == 7) ? MinValue : 7; 
+  LCD->clear();
+  World->ReturnFood();
+}
+
 void cSnake::Start(){
     World->WorldBlocks[0][0]|= 1<<MaxValue;
     LCD->createChar(0,World->WorldBlocks[0]);
@@ -154,4 +151,10 @@ void cSnake::Start(){
 void cSnake::Again(){
     VerticalLocation = Time = HorizontalLocation = VertGlobal = 0;
     Start();
+}
+
+void cSnake::PreparationArea(){
+    LCD->clear();
+    World->ReturnFood();
+    Clear();
 }
