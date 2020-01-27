@@ -9,7 +9,7 @@ cWorld::cWorld(const LiquidCrystal_I2C* L){
   
 void cWorld::CreateWorld(const uint8_t &ScaleH, const uint8_t &ScaleV){
   uint8_t x = ScaleH*ScaleV;
-    for(uint8_t i = 0; i<=32;i++)
+    for(uint8_t i = 0; i<=x;i++)
       for(uint8_t j = 0; j<8; j++)
         WorldBlocks[i][j] = B00000;
     Create = false;

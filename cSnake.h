@@ -43,4 +43,15 @@ class cSnake{
   void MoveDown();
   void MoveUp();
   void PreparationArea();
-    };
+  
+  struct Body{
+  uint8_t VertGlobal;
+  uint8_t VertLocation;
+  uint8_t HorizLocation;
+  uint8_t PositionPixel;
+  uint8_t LifePeriod;
+  };
+  
+  void SetValue(const uint8_t &VGlobal,const uint8_t &HLocation, const uint8_t &VLocation, const uint8_t &HeadSnake, const uint8_t& LifePeriod);
+  Body bodyArray[];
+};

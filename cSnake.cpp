@@ -7,7 +7,7 @@ cSnake::cSnake(const LiquidCrystal_I2C* L, cWorld* W){
   LongSnake =  1;
   HeadSnake = TailSnake = 4;
 }
- 
+  
 inline void cSnake::Clear(){World->WorldBlocks[HorizontalLocation][VerticalLocation] &=~ (1<<TailSnake);}  
 inline void cSnake::Drawing(){World->WorldBlocks[HorizontalLocation][VerticalLocation]|= 1<<HeadSnake;}
 inline void cSnake::ClearVisibleArea(const int8_t& h = 0){World->WorldBlocks[HorizontalLocation+h][VerticalLocation] = B00000;} 
@@ -142,19 +142,24 @@ void cSnake::CheckGlobalVertical(){
 }
 
 void cSnake::Start(){
-    World->WorldBlocks[0][0]|= 1<<MaxValue;
-    LCD->createChar(0,World->WorldBlocks[0]);
-    LCD->setCursor(HorizontalLocation,VertGlobal); 
-    LCD->write(byte(0)); 
+  World->WorldBlocks[0][0]|= 1<<MaxValue;
+  LCD->createChar(0,World->WorldBlocks[0]);
+  LCD->setCursor(HorizontalLocation,VertGlobal); 
+  LCD->write(byte(0)); 
 }
   
 void cSnake::Again(){
-    VerticalLocation = Time = HorizontalLocation = VertGlobal = 0;
-    Start();
+  VerticalLocation = Time = HorizontalLocation = VertGlobal = 0;
+  Start();
 }
 
 void cSnake::PreparationArea(){
     LCD->clear();
     World->ReturnFood();
     Clear();
+}
+
+void cSnake::SetValue(const uint8_t &VGlobal,const uint8_t &HLocation, const uint8_t &VLocation, const uint8_t &HeadSnake, const uint8_t& LifePeriod){
+  Body part = {VGlobal, VLocation, HLocation, HeadSnake, LifePeriod};
+  bodyArray[0] = part;
 }
