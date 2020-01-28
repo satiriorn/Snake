@@ -2,13 +2,15 @@
 #include <Arduino.h>
 #include "cWorld.h"
 #include <LiquidCrystal_I2C.h>
+#include <Vector.h>
+
 
 #define MaxValue 4
 #define MinValue 0
 
 class cSnake{
   public:
-  cSnake(const LiquidCrystal_I2C* L, cWorld* W);
+  explicit cSnake(const LiquidCrystal_I2C* L, cWorld* W);
   virtual void Start();
   virtual void Again();
   virtual void MoveSnake(const int& V,const int& H);
@@ -53,5 +55,5 @@ class cSnake{
   };
   
   void SetValue(const uint8_t &VGlobal,const uint8_t &HLocation, const uint8_t &VLocation, const uint8_t &HeadSnake, const uint8_t& LifePeriod);
-  Body bodyArray[];
+  Vector<Body> bodyArray;
 };

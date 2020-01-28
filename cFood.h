@@ -7,7 +7,7 @@
 
 class cFood{
   public:
-    cFood(const LiquidCrystal_I2C* L,const cWorld* W);
+    explicit cFood(const LiquidCrystal_I2C* L,const cWorld* W);
     void GenerateFood();
     void Drawing();
 

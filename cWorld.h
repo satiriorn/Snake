@@ -4,7 +4,7 @@
 
 class cWorld{
   public:
-  cWorld(const LiquidCrystal_I2C* L);
+  explicit cWorld(const LiquidCrystal_I2C* L);
   void CheckWorld(const uint8_t &VertGlobal,const uint8_t &HorizontalLocation, const uint8_t &VerticalLocation, const uint8_t &HeadSnake);
   void CreateWorld(const uint8_t &ScaleH, const uint8_t &ScaleV);
   void ReturnFood();

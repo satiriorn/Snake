@@ -4,6 +4,7 @@
 #include "cFood.h"
 #include "cWorld.h"
 
+using namespace std;
 const int ScaleLcdHorizontal = 16;
 const int ScaleLcdVertical = 2;
 LiquidCrystal_I2C lcd (0x27, ScaleLcdHorizontal, ScaleLcdVertical);
