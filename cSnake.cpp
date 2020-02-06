@@ -159,6 +159,8 @@ void cSnake::PreparationArea(){
     Clear();
 }
 
-void cSnake::SetValue(const uint8_t &VGlobal,const uint8_t &HLocation, const uint8_t &VLocation, const uint8_t &HeadSnake, const uint8_t& LifePeriod){
-  Body part = {VGlobal, VLocation, HLocation, HeadSnake, LifePeriod};
+void cSnake::SetValueBody(const uint8_t &VGlobal,const uint8_t &HLocation, const uint8_t &VLocation, const uint8_t &HeadSnake){
+  Body part = {VGlobal, VLocation, HLocation, HeadSnake};
+  bodyArray[0] = part;
+  
 }
