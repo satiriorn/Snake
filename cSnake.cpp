@@ -30,11 +30,12 @@ void cSnake::MoveSnake(const int& V,const int& H){
     MoveUp();
    VisibleArea();
    delay(Time);
+   Serial.print(TailSnake);
+   Serial.print(HeadSnake);
 }
   
 void cSnake::CheckTail(){
   PreparationArea();
-  TailSnake = (TailSnake==MaxValue) ? MinValue : MaxValue;
   if(LongSnake > 1 && TailSnake==MaxValue){
     HeadSnake--;
     Drawing();
@@ -49,15 +50,11 @@ void cSnake::CheckTail(){
 void cSnake::MoveRight(){
   if(ChangeSnake)
     UpSnake(true,&HeadSnake);
-  if(TailSnake==0){
-    CheckTail();
-    ClearVisibleArea(-1);
-    }
   if(HeadSnake==0)
     CheckHead();
   else if(Make==false){
+    SetValueBody(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
     Clear();
-    TailSnake--;
     HeadSnake--;
     Drawing();
   }
@@ -86,6 +83,7 @@ void cSnake::MoveDown(){
   else if(VerticalLocation==7)
     CheckGlobalVertical();
   else{
+    SetValueBody(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
     Clear();  
     VerticalLocation++;
     Drawing();
@@ -98,6 +96,7 @@ void cSnake::MoveUp(){
   if(VerticalLocation==0)
     CheckGlobalVertical();
   else{
+    SetValueBody(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
     Clear();
     VerticalLocation--;
     Drawing();
@@ -123,12 +122,10 @@ void cSnake::VisibleArea(){
 
 void cSnake::CheckHead(){
   PreparationArea();
+  SetValueBody(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
+  Clear();
   (HeadSnake==MaxValue) ? HorizontalLocation-- : HorizontalLocation++;
   HeadSnake = (HeadSnake==MaxValue) ? MinValue : MaxValue;
-  if(LongSnake > 1 && HeadSnake==MaxValue)
-    TailSnake--;
-  else if(LongSnake > 1 && HeadSnake==MinValue)
-    TailSnake++;
   LCD->setCursor(HorizontalLocation,VertGlobal);
   Drawing();
   Make = true;
@@ -161,6 +158,12 @@ void cSnake::PreparationArea(){
 
 void cSnake::SetValueBody(const uint8_t &VGlobal,const uint8_t &HLocation, const uint8_t &VLocation, const uint8_t &HeadSnake){
   Body part = {VGlobal, VLocation, HLocation, HeadSnake};
-  bodyArray[0] = part;
-  
+  if(LongSnake==1){
+    bodyArray[LongSnake-1] = part;
+    TailSnake = bodyArray[LongSnake-1].PositionPixel;
+  }
+  else{
+    
+    
+    }
 }
