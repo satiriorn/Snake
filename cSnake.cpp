@@ -8,7 +8,7 @@ cSnake::cSnake(const LiquidCrystal_I2C* L, cWorld* W){
   HeadSnake = TailSnake = 4;
 }
   
-inline void cSnake::Clear(){World->WorldBlocks[HorizontalLocation][VerticalLocation] &=~ (1<<TailSnake);}  
+inline void cSnake::Clear(const int8_t& VerticalLocation = 0){World->WorldBlocks[HorizontalLocation][VerticalLocation] &=~ (1<<TailSnake);}  
 inline void cSnake::Drawing(){World->WorldBlocks[HorizontalLocation][VerticalLocation]|= 1<<HeadSnake;}
 inline void cSnake::ClearVisibleArea(const int8_t& h = 0){World->WorldBlocks[HorizontalLocation+h][VerticalLocation] = B00000;} 
 
@@ -30,21 +30,6 @@ void cSnake::MoveSnake(const int& V,const int& H){
     MoveUp();
    VisibleArea();
    delay(Time);
-   Serial.print(TailSnake);
-   Serial.print(HeadSnake);
-}
-  
-void cSnake::CheckTail(){
-  PreparationArea();
-  if(LongSnake > 1 && TailSnake==MaxValue){
-    HeadSnake--;
-    Drawing();
-    }
-  else if(LongSnake > 1 && TailSnake==MinValue){
-    HeadSnake++;
-    Drawing();
-  }
-  Make = true;
 }
   
 void cSnake::MoveRight(){
@@ -52,29 +37,17 @@ void cSnake::MoveRight(){
     UpSnake(true,&HeadSnake);
   if(HeadSnake==0)
     CheckHead();
-  else if(Make==false){
-    SetValueBody(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
-    Clear();
-    HeadSnake--;
-    Drawing();
-  }
+  else if(Make==false)
+    Movements(&HeadSnake);
 }
 
 void cSnake::MoveLeft(){
   if(ChangeSnake)
     UpSnake(false,&HeadSnake);
-  if(TailSnake==4){
-    CheckTail(); 
-    ClearVisibleArea(1);
-  }
   if(HeadSnake == 4)
     CheckHead();
-  else if(Make==false){ 
-    Clear(); 
-    TailSnake++;
-    HeadSnake++;
-    Drawing();
-  }
+  else if(Make==false)
+    Movements(&HeadSnake, true);
 }
  
 void cSnake::MoveDown(){
@@ -82,12 +55,8 @@ void cSnake::MoveDown(){
     UpSnake(false,&VerticalLocation);
   else if(VerticalLocation==7)
     CheckGlobalVertical();
-  else{
-    SetValueBody(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
-    Clear();  
-    VerticalLocation++;
-    Drawing();
-  }
+  else
+     Movements(&VerticalLocation,true);
 }
   
 void cSnake::MoveUp(){
@@ -95,18 +64,23 @@ void cSnake::MoveUp(){
     UpSnake(true,&VerticalLocation);
   if(VerticalLocation==0)
     CheckGlobalVertical();
-  else{
-    SetValueBody(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
-    Clear();
-    VerticalLocation--;
-    Drawing();
-  }
+  else
+    Movements(&VerticalLocation);
 }
   
 void cSnake::UpSnake(bool Side = false,uint8_t* value = 0){
-    *value = (Side)?*value-=1:*value+=1;
-    Drawing();
-    ChangeSnake = false;
+  SetValueBody(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
+  *value = (Side)?*value-=1:*value+=1;
+  Drawing();
+  ChangeSnake = false;
+}
+
+void cSnake::Movements(uint8_t* value = nullptr, bool location = false){
+  SetValueBody(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
+  if((TailSnake==MaxValue&&location==true)||(TailSnake==MinValue&&location==false))
+    (location==false)?ClearVisibleArea(-1):ClearVisibleArea(1);
+  *value = (location==false) ? *value-=1:*value+=1;
+  Drawing();
 }
 
 void cSnake::VisibleArea(){
@@ -123,7 +97,6 @@ void cSnake::VisibleArea(){
 void cSnake::CheckHead(){
   PreparationArea();
   SetValueBody(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
-  Clear();
   (HeadSnake==MaxValue) ? HorizontalLocation-- : HorizontalLocation++;
   HeadSnake = (HeadSnake==MaxValue) ? MinValue : MaxValue;
   LCD->setCursor(HorizontalLocation,VertGlobal);
@@ -151,9 +124,8 @@ void cSnake::Again(){
 }
 
 void cSnake::PreparationArea(){
-    LCD->clear();
-    World->ReturnFood();
-    Clear();
+  LCD->clear();
+  World->ReturnFood();
 }
 
 void cSnake::SetValueBody(const uint8_t &VGlobal,const uint8_t &HLocation, const uint8_t &VLocation, const uint8_t &HeadSnake){
@@ -162,8 +134,16 @@ void cSnake::SetValueBody(const uint8_t &VGlobal,const uint8_t &HLocation, const
     bodyArray[LongSnake-1] = part;
     TailSnake = bodyArray[LongSnake-1].PositionPixel;
   }
+  else if(bodyArray.size()!=(LongSnake-1)){
+    bodyArray.push_back(part);
+    TailSnake = bodyArray[0].PositionPixel;
+  }
   else{
-    
-    
-    }
+    Body x = bodyArray[1];
+    bodyArray[0] = x; 
+    bodyArray[1] = part;
+    TailSnake = bodyArray[0].PositionPixel;
+    Serial.print(TailSnake);
+  }
+  Clear(bodyArray[0].VertLocation);
 }

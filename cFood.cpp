@@ -11,8 +11,8 @@ cFood::cFood(const LiquidCrystal_I2C* L, const cWorld* W){
 void cFood::GenerateFood(){
   FoodLocationV = random(0,1);
   FoodLocationH = random(1,15);
-  RandomFoodLocation =2;// random(0,4);
-  VerticalLocalFood = 0;//random(0,8);
+  RandomFoodLocation = random(0,4);
+  VerticalLocalFood = random(0,8);
   Drawing();
   World->GetValueFood(FoodLocationV, FoodLocationH, RandomFoodLocation, VerticalLocalFood);
 }
