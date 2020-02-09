@@ -5,7 +5,7 @@
 
 class cMainMenu{
   public:
-      explicit cMainMenu(const LiquidCrystal_I2C* L);
+      explicit cMainMenu(const LiquidCrystal_I2C* L,cWorld *W);
       virtual void SetActiveMenu(bool active);
       virtual void GameOver();
       virtual void Win();

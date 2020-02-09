@@ -1,8 +1,9 @@
 #include "cMainMenu.h"
 
 
-cMainMenu::cMainMenu(const LiquidCrystal_I2C* L){
+cMainMenu::cMainMenu(const LiquidCrystal_I2C* L, cWorld* W){
     LCD=L;
+    World = W;
     Welcome();
   }
 void cMainMenu::Welcome(){

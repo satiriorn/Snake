@@ -3,14 +3,22 @@
 cSnake::cSnake(const LiquidCrystal_I2C* L, cWorld* W){
   LCD = L;
   World = W;
-  VerticalLocation = Time = HorizontalLocation = VertGlobal = 0;
+  VerticalLocation = Time = HorizontalLocation = VertGlobal = MinValue;
   LongSnake =  1;
-  HeadSnake = TailSnake = 4;
+  HeadSnake = TailSnake = MaxValue;
 }
   
 inline void cSnake::Clear(const int8_t& VerticalLocation = 0, const int8_t& HorizontalLocation = 0){World->WorldBlocks[HorizontalLocation][VerticalLocation] &=~ (1<<TailSnake);}  
 inline void cSnake::Drawing(){World->WorldBlocks[HorizontalLocation][VerticalLocation]|= 1<<HeadSnake;}
 inline void cSnake::ClearVisibleArea(const int8_t& h = 0){World->WorldBlocks[HorizontalLocation+h][VerticalLocation] = B00000;} 
+inline void cSnake::ShiftSpace(){
+  for(uint16_t i = MinValue ; i<(LongSnake-1);i++){
+    Body x = bodyArray[i+1];
+    bodyArray[i] = x;
+  }
+}
+void cSnake::Again(){VerticalLocation = Time = HorizontalLocation = VertGlobal = 0; Start();}
+inline void cSnake::PreparationArea(){LCD->clear();World->ReturnFood();}
 
 void cSnake::MoveSnake(const int& V,const int& H){
   Time=200;
@@ -30,13 +38,12 @@ void cSnake::MoveSnake(const int& V,const int& H){
     MoveUp();
    VisibleArea();
    delay(Time);
-   Serial.print(TailSnake);
 }
   
 void cSnake::MoveRight(){
   if(ChangeSnake)
     UpSnake(true,&HeadSnake);
-  if(HeadSnake==0)
+  if(HeadSnake==MinValue)
     CheckHead();
   else if(Make==false)
     Movements(&HeadSnake);
@@ -45,7 +52,7 @@ void cSnake::MoveRight(){
 void cSnake::MoveLeft(){
   if(ChangeSnake)
     UpSnake(false,&HeadSnake);
-  if(HeadSnake == 4)
+  if(HeadSnake == MaxValue)
     CheckHead();
   else if(Make==false)
     Movements(&HeadSnake, true);
@@ -63,7 +70,7 @@ void cSnake::MoveDown(){
 void cSnake::MoveUp(){
   if(ChangeSnake)
     UpSnake(true,&VerticalLocation);
-  if(VerticalLocation==0)
+  if(VerticalLocation==MinValue)
     CheckGlobalVertical();
   else
     Movements(&VerticalLocation);
@@ -74,7 +81,6 @@ void cSnake::UpSnake(bool Side = false,uint8_t* value = 0){
   *value = (Side)?*value-=1:*value+=1;
   Drawing();
   ChangeSnake = false;
-  
 }
 
 void cSnake::Movements(uint8_t* value = nullptr, bool location = false){
@@ -119,36 +125,13 @@ void cSnake::Start(){
   LCD->setCursor(HorizontalLocation,VertGlobal); 
   LCD->write(byte(0)); 
 }
-  
-void cSnake::Again(){
-  VerticalLocation = Time = HorizontalLocation = VertGlobal = 0;
-  Start();
-}
-
-void cSnake::PreparationArea(){
-  LCD->clear();
-  World->ReturnFood();
-}
-
-void cSnake::ShiftSpace(){
-  for(uint16_t i = 0 ; i<(LongSnake-1);i++){
-    Body x = bodyArray[i+1];
-    bodyArray[i] = x;
-  }
-}
 
 void cSnake::SetValueBody(const uint8_t &VGlobal,const uint8_t &HLocation, const uint8_t &VLocation, const uint8_t &HeadSnake){
   Body part = {VGlobal, VLocation, HLocation, HeadSnake};
   if(bodyArray.size()!=(LongSnake-1))
     bodyArray.push_back(part);
-  if(LongSnake==1){
-    bodyArray[LongSnake-1] = part;
-    TailSnake = bodyArray[LongSnake-1].PositionPixel;
-  }
-  else{
-    ShiftSpace();
-    bodyArray[LongSnake-1] = part;
-  }
+  ShiftSpace();
+  bodyArray[LongSnake-1] = part;
   TailSnake = bodyArray[0].PositionPixel;
   Clear(bodyArray[0].VertLocation, bodyArray[0].HorizLocation);
 }

@@ -14,6 +14,8 @@ class cWorld{
   bool UpSnake;
   bool Create = true;
   bool SpawnFood;
+  bool Mode = false;
+  uint32_t Score = 0;
   byte WorldBlocks[32][8];
   
   private:

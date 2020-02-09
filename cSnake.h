@@ -11,9 +11,9 @@
 class cSnake{
   public:
   explicit cSnake(const LiquidCrystal_I2C* L, cWorld* W);
-  virtual void Start();
-  virtual void Again();
-  virtual void MoveSnake(const int& V,const int& H);
+  void Again();
+  void Start();
+  void MoveSnake(const int& V,const int& H);
   int8_t HorizontalLocation; 
   int8_t VertGlobal;
 
@@ -21,6 +21,8 @@ class cSnake{
   inline void Clear(const int8_t& VerticalLocation = 0, const int8_t& HorizontalLocation = 0);
   inline void Drawing();
   inline void ClearVisibleArea(const int8_t& h = 0);
+  inline void ShiftSpace();
+  inline void PreparationArea();
 
   uint8_t LongSnake;
   uint8_t SpeedSnake;
@@ -43,9 +45,8 @@ class cSnake{
   void MoveLeft();
   void MoveDown();
   void MoveUp();
-  void PreparationArea();
+  
   void Movements(uint8_t* value = nullptr, bool location = false);
-  void ShiftSpace();
   
   struct Body{
   uint8_t VertGlobal;

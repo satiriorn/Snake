@@ -29,7 +29,7 @@ void setup() {
   lcd.begin(); 
   Serial.begin(9600);
   lcd.backlight();
-  cMainMenu Menu(LCD);
+  cMainMenu Menu(LCD,world);
   menu = &Menu;
   
 }
