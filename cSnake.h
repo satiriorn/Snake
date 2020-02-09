@@ -18,7 +18,7 @@ class cSnake{
   int8_t VertGlobal;
 
   private:
-  inline void Clear(const int8_t& VerticalLocation = 0);
+  inline void Clear(const int8_t& VerticalLocation = 0, const int8_t& HorizontalLocation = 0);
   inline void Drawing();
   inline void ClearVisibleArea(const int8_t& h = 0);
 
@@ -45,6 +45,7 @@ class cSnake{
   void MoveUp();
   void PreparationArea();
   void Movements(uint8_t* value = nullptr, bool location = false);
+  void ShiftSpace();
   
   struct Body{
   uint8_t VertGlobal;

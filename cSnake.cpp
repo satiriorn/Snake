@@ -8,7 +8,7 @@ cSnake::cSnake(const LiquidCrystal_I2C* L, cWorld* W){
   HeadSnake = TailSnake = 4;
 }
   
-inline void cSnake::Clear(const int8_t& VerticalLocation = 0){World->WorldBlocks[HorizontalLocation][VerticalLocation] &=~ (1<<TailSnake);}  
+inline void cSnake::Clear(const int8_t& VerticalLocation = 0, const int8_t& HorizontalLocation = 0){World->WorldBlocks[HorizontalLocation][VerticalLocation] &=~ (1<<TailSnake);}  
 inline void cSnake::Drawing(){World->WorldBlocks[HorizontalLocation][VerticalLocation]|= 1<<HeadSnake;}
 inline void cSnake::ClearVisibleArea(const int8_t& h = 0){World->WorldBlocks[HorizontalLocation+h][VerticalLocation] = B00000;} 
 
@@ -30,6 +30,7 @@ void cSnake::MoveSnake(const int& V,const int& H){
     MoveUp();
    VisibleArea();
    delay(Time);
+   Serial.print(TailSnake);
 }
   
 void cSnake::MoveRight(){
@@ -73,6 +74,7 @@ void cSnake::UpSnake(bool Side = false,uint8_t* value = 0){
   *value = (Side)?*value-=1:*value+=1;
   Drawing();
   ChangeSnake = false;
+  
 }
 
 void cSnake::Movements(uint8_t* value = nullptr, bool location = false){
@@ -128,22 +130,25 @@ void cSnake::PreparationArea(){
   World->ReturnFood();
 }
 
+void cSnake::ShiftSpace(){
+  for(uint16_t i = 0 ; i<(LongSnake-1);i++){
+    Body x = bodyArray[i+1];
+    bodyArray[i] = x;
+  }
+}
+
 void cSnake::SetValueBody(const uint8_t &VGlobal,const uint8_t &HLocation, const uint8_t &VLocation, const uint8_t &HeadSnake){
   Body part = {VGlobal, VLocation, HLocation, HeadSnake};
+  if(bodyArray.size()!=(LongSnake-1))
+    bodyArray.push_back(part);
   if(LongSnake==1){
     bodyArray[LongSnake-1] = part;
     TailSnake = bodyArray[LongSnake-1].PositionPixel;
   }
-  else if(bodyArray.size()!=(LongSnake-1)){
-    bodyArray.push_back(part);
-    TailSnake = bodyArray[0].PositionPixel;
-  }
   else{
-    Body x = bodyArray[1];
-    bodyArray[0] = x; 
-    bodyArray[1] = part;
-    TailSnake = bodyArray[0].PositionPixel;
-    Serial.print(TailSnake);
+    ShiftSpace();
+    bodyArray[LongSnake-1] = part;
   }
-  Clear(bodyArray[0].VertLocation);
+  TailSnake = bodyArray[0].PositionPixel;
+  Clear(bodyArray[0].VertLocation, bodyArray[0].HorizLocation);
 }
