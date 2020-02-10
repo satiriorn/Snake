@@ -23,6 +23,7 @@ void cMainMenu::DoMenu(){
   
 void cMainMenu::SetActiveMenu(bool ActiveItemOne){
   if(ActiveItemOne){
+    World->Mode = true;
       LCD->clear();
       LCD->setCursor(5,0);
       LCD->print("Training");

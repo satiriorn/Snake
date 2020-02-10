@@ -22,4 +22,4 @@ void cFood::Drawing(){
   LCD->createChar(7,World->WorldBlocks[FoodLocationH]);
   LCD->setCursor(FoodLocationH, FoodLocationV);
   LCD->write(byte(7)); 
-}
+} 

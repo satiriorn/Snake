@@ -17,11 +17,10 @@ inline void cSnake::ShiftSpace(){
     bodyArray[i] = x;
   }
 }
-void cSnake::Again(){VerticalLocation = Time = HorizontalLocation = VertGlobal = 0; Start();}
 inline void cSnake::PreparationArea(){LCD->clear();World->ReturnFood();}
 
 void cSnake::MoveSnake(const int& V,const int& H){
-  Time=200;
+  Time = 200;
   Make = false;
   World->CheckWorld(VertGlobal, HorizontalLocation, VerticalLocation, HeadSnake);
   if(World->UpSnake){
@@ -125,6 +124,8 @@ void cSnake::Start(){
   LCD->setCursor(HorizontalLocation,VertGlobal); 
   LCD->write(byte(0)); 
 }
+
+void cSnake::Again(){VerticalLocation = Time = HorizontalLocation = VertGlobal = 0; Start();}
 
 void cSnake::SetValueBody(const uint8_t &VGlobal,const uint8_t &HLocation, const uint8_t &VLocation, const uint8_t &HeadSnake){
   Body part = {VGlobal, VLocation, HLocation, HeadSnake};

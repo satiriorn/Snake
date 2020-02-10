@@ -32,6 +32,7 @@ void cWorld::CheckWorld(const uint8_t &VertGlobal,const uint8_t &HorizontalLocat
   UpSnake = SpawnFood = false;
    if(VertGlobal == *FLV && HorizontalLocation == *FLH && VerticalLocation == *VLF && HeadSnake == *RLV){
         SpawnFood = UpSnake =true;
+        Score++;
     }
    else if(VertGlobal == -1||VertGlobal == 2||HorizontalLocation == -1||HorizontalLocation == 16){
        GameOver = true;
