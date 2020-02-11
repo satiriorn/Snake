@@ -6,12 +6,13 @@
 class cMainMenu{
   public:
       explicit cMainMenu(const LiquidCrystal_I2C* L,cWorld *W);
-      virtual void SetActiveMenu(bool active);
-      virtual void GameOver();
-      virtual void Win();
+      void SetActiveMenu(bool active);
+      void GameOver();
+      void Win();
   private:
-      virtual void Welcome();
-      virtual void DoMenu();
+      inline void Welcome();
+      void DoMenu();
+      void Print(String message, uint8_t valueH,uint8_t valueV,uint32_t Time = 1000);
       cWorld *World = nullptr;
       const LiquidCrystal_I2C* LCD = nullptr;
-    };
+};

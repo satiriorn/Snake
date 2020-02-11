@@ -2,16 +2,15 @@
 
 
 cMainMenu::cMainMenu(const LiquidCrystal_I2C* L, cWorld* W){
-    LCD=L;
-    World = W;
-    Welcome();
-  }
-void cMainMenu::Welcome(){
-  LCD->setCursor(0,0);
-  LCD->print("Welcome in Snake");
-  delay(1000);
+  LCD=L;
+  World = W;
+  Welcome();
+}
+
+inline void cMainMenu::Welcome(){
+  Print("Welcome in Snake", 0, 0); 
   DoMenu();
-  }
+}
   
 void cMainMenu::DoMenu(){
   LCD->clear();
@@ -24,34 +23,27 @@ void cMainMenu::DoMenu(){
 void cMainMenu::SetActiveMenu(bool ActiveItemOne){
   if(ActiveItemOne){
     World->Mode = true;
-      LCD->clear();
-      LCD->setCursor(5,0);
-      LCD->print("Training");
-      delay(1000);
-      LCD->clear();          
-    }
-  else{
-      LCD->clear();
-      LCD->setCursor(5,0);
-      LCD->print("Arcade");
-      delay(1000);
-      LCD->clear();
-    }
-  }
+    Print("Training", 5, 0);        
+   }
+  else
+    Print("Arcade", 5, 0);
+   LCD->clear();
+}
 
 void cMainMenu::GameOver(){
-    LCD->clear();
-    LCD->setCursor(5,0);
-    LCD->print("Game Over");
-    delay(3000);
-    LCD->clear();
-    DoMenu();     
-  }
+  Print("Game Over", 5, 0,3000);
+  LCD->clear();
+  DoMenu();     
+}
 
 void cMainMenu::Win(){
-    LCD->clear();
-    LCD->setCursor(5,0);
-    LCD->print("You Win!");
-    delay(3000);
-    DoMenu();
-  }
+  Print("You Win!", 5, 0,3000);
+  DoMenu();
+}
+
+void cMainMenu::Print(String message, uint8_t valueH,uint8_t valueV,uint32_t Time = 1000){
+  LCD->clear();
+  LCD->setCursor(valueH,valueV);
+  LCD->print(message);
+  delay(Time);
+}

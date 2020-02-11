@@ -12,7 +12,7 @@ void cWorld::CreateWorld(const uint8_t &ScaleH, const uint8_t &ScaleV){
     for(uint8_t i = 0; i<=x;i++)
       for(uint8_t j = 0; j<8; j++)
         WorldBlocks[i][j] = B00000;
-    Create = false;
+   Create = false;
 }
   
 void cWorld::GetValueFood(const uint8_t& FoodLocationV, const uint8_t& FoodLocationH,const uint8_t& RandomFoodLocation,const uint8_t& VerticalLocalFood){
@@ -34,7 +34,6 @@ void cWorld::CheckWorld(const uint8_t &VertGlobal,const uint8_t &HorizontalLocat
         SpawnFood = UpSnake =true;
         Score++;
     }
-   else if(VertGlobal == -1||VertGlobal == 2||HorizontalLocation == -1||HorizontalLocation == 16){
+   else if(VertGlobal == -1||VertGlobal == 2||HorizontalLocation == -1||HorizontalLocation == 16)
        GameOver = true;
-    }
 }

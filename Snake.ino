@@ -31,7 +31,6 @@ void setup() {
   lcd.backlight();
   cMainMenu Menu(LCD,world);
   menu = &Menu;
-  
 }
 
 void loop() {  

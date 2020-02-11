@@ -24,5 +24,4 @@ class cWorld{
   uint8_t* RLV = nullptr;
   uint8_t* VLF = nullptr;
   const LiquidCrystal_I2C* LCD = nullptr;
-  
   };
