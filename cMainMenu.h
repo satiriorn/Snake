@@ -11,8 +11,9 @@ class cMainMenu{
       void Win();
   private:
       inline void Welcome();
-      void DoMenu();
-      void Print(String message, uint8_t valueH,uint8_t valueV,uint32_t Time = 1000);
+      inline void PrintScore();
+      inline void Print(String message = "", uint8_t valueH = 0,uint8_t valueV = 0,uint32_t Time = 1000);
+      inline void DoMenu();
       cWorld *World = nullptr;
       const LiquidCrystal_I2C* LCD = nullptr;
 };

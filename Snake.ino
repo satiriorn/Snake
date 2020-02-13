@@ -45,6 +45,11 @@ void loop() {
      if(world->SpawnFood)
       food->GenerateFood();
     snake->MoveSnake(vert,horiz);
+    if(world->Score>=10){
+      Active = false;
+      menu->Win();
+      snake->Again();
+      }
     if(world->GameOver){
       world->GameOver=false;
       menu->GameOver();

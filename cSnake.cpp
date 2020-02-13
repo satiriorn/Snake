@@ -28,8 +28,8 @@ void cSnake::MoveSnake(const int& V,const int& H){
     ChangeSnake = true;
     }
   TravelSystem(V,H);
-   VisibleArea();
-   delay(Time);
+  VisibleArea();
+  delay(Time);
 }
   
 void cSnake::MoveRight(){
