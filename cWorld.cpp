@@ -1,6 +1,5 @@
 #include "cWorld.h"
 
-
 cWorld::cWorld(const LiquidCrystal_I2C* L){
   LCD = L;
   GameOver = UpSnake = false;

@@ -3,7 +3,7 @@
 cSnake::cSnake(const LiquidCrystal_I2C* L, cWorld* W){
   LCD = L;
   World = W;
-  VerticalLocation = Time = HorizontalLocation = VertGlobal = MinValue;
+  VerticalLocation = Time = HorizontalLocation = VertGlobal = h = v = MinValue;
   LongSnake =  1;
   HeadSnake = TailSnake = MaxValue;
 }
@@ -27,14 +27,7 @@ void cSnake::MoveSnake(const int& V,const int& H){
     LongSnake++;
     ChangeSnake = true;
     }
-  if(H>900&&V>400&&V<600)
-    MoveRight(); 
-   else if(H<100&&V>400&&V<600)
-    MoveLeft();
-   else if(V>900&&H>400&&H<600)
-    MoveDown();
-   else if(V<100&&H>400&&H<600)
-    MoveUp();
+  TravelSystem(V,H);
    VisibleArea();
    delay(Time);
 }
@@ -63,7 +56,7 @@ void cSnake::MoveDown(){
   else if(VerticalLocation==7)
     CheckGlobalVertical();
   else
-     Movements(&VerticalLocation,true);
+    Movements(&VerticalLocation,true);
 }
   
 void cSnake::MoveUp(){
@@ -113,7 +106,7 @@ void cSnake::CheckHead(){
   
 void cSnake::CheckGlobalVertical(){
   (VerticalLocation==MinValue) ? VertGlobal-- : VertGlobal++;
-  VerticalLocation =(VerticalLocation == 7) ? MinValue : 7; 
+  VerticalLocation =(VerticalLocation == 7) ? 0 : 7; 
   LCD->clear();
   World->ReturnFood();
 }
@@ -123,6 +116,8 @@ void cSnake::Start(){
   LCD->createChar(0,World->WorldBlocks[0]);
   LCD->setCursor(HorizontalLocation,VertGlobal); 
   LCD->write(byte(0)); 
+  h = 1000;
+  v = 500;
 }
 
 void cSnake::Again(){VerticalLocation = Time = HorizontalLocation = VertGlobal = 0; Start();}
@@ -135,4 +130,21 @@ void cSnake::SetValueBody(const uint8_t &VGlobal,const uint8_t &HLocation, const
   bodyArray[LongSnake-1] = part;
   TailSnake = bodyArray[0].PositionPixel;
   Clear(bodyArray[0].VertLocation, bodyArray[0].HorizLocation);
+}
+
+void cSnake::TravelSystem(const int& V,const int& H){
+   if(H>900&&V>400&&V<600)
+    MoveRight(); 
+   else if(H<100&&V>400&&V<600)
+    MoveLeft();
+   else if(V>900&&H>400&&H<600)
+    MoveDown();
+   else if(V<100&&H>400&&H<600)
+    MoveUp();
+   else if(World->Mode==false)
+    TravelSystem(v,h);
+   if((H>900&&V>400&&V<600)||(H<100&&V>400&&V<600)||(V>900&&H>400&&H<600)||(V<100&&H>400&&H<600)){
+      h = H;
+      v = V;
+    }
 }

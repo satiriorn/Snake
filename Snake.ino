@@ -4,8 +4,9 @@
 #include "cFood.h"
 #include "cWorld.h"
 
-const int ScaleLcdHorizontal = 16;
-const int ScaleLcdVertical = 2;
+const int ScaleLcdHorizontal = 16;                                  //Horizontal LCD screen size
+const int ScaleLcdVertical = 2;                                     //Vertical LCD screen size
+
 LiquidCrystal_I2C lcd (0x27, ScaleLcdHorizontal, ScaleLcdVertical);
 const LiquidCrystal_I2C *LCD = &lcd;
 
@@ -41,9 +42,8 @@ void loop() {
       world->CreateWorld(ScaleLcdHorizontal, ScaleLcdVertical);
       snake->Start();
     }
-     if(world->SpawnFood){
+     if(world->SpawnFood)
       food->GenerateFood();
-    }
     snake->MoveSnake(vert,horiz);
     if(world->GameOver){
       world->GameOver=false;
@@ -53,11 +53,11 @@ void loop() {
       }
     }
   if(horiz<=100&&Active==false){
-        menu->SetActiveMenu(false);
-        Active =true;
-        }
+      menu->SetActiveMenu(false);
+      Active =true;
+  }
   else if(horiz>=980&&Active==false){
-        menu->SetActiveMenu(true);
-        Active = true; 
+      menu->SetActiveMenu(true);
+      Active = true; 
   }  
 }

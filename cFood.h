@@ -3,8 +3,6 @@
 #include "cWorld.h"
 #include <LiquidCrystal_I2C.h>
 
-
-
 class cFood{
   public:
     explicit cFood(const LiquidCrystal_I2C* L,const cWorld* W);

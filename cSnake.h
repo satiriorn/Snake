@@ -4,7 +4,6 @@
 #include <LiquidCrystal_I2C.h>
 #include <vector.h>
 
-
 #define MaxValue 4
 #define MinValue 0
 
@@ -30,6 +29,8 @@ class cSnake{
   uint8_t VerticalLocation;
   uint8_t HeadSnake;
   uint8_t TailSnake;
+  int v;
+  int h;
   
   bool ChangeSnake = false;
   bool Make = false;
@@ -45,10 +46,9 @@ class cSnake{
   void MoveLeft();
   void MoveDown();
   void MoveUp();
-  
+  void TravelSystem(const int& V,const int& H);
   void Movements(uint8_t* value = nullptr, bool location = false);
-  
-  struct Body{
+  typedef struct Body{
   uint8_t VertGlobal;
   uint8_t VertLocation;
   uint8_t HorizLocation;
