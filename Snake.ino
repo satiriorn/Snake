@@ -8,7 +8,7 @@ const int ScaleLcdHorizontal = 16;                                  //Horizontal
 const int ScaleLcdVertical = 2;                                     //Vertical LCD screen size
 
 LiquidCrystal_I2C lcd (0x27, ScaleLcdHorizontal, ScaleLcdVertical);
-const LiquidCrystal_I2C *LCD = &lcd;
+const LiquidCrystal_I2C *LCD = &lcd;                                //initialization of the pointer to pass to other classes
 
 const int V = 2;
 const int H = 1;
@@ -37,32 +37,42 @@ void setup() {
 void loop() {  
   vert = analogRead(V);
   horiz = analogRead(H);
-  if(Active){
-     if(world->Create){
+  Activity();
+  ChoiceMode(horiz);
+}
+
+inline void Activity(){
+  if(Active){//The state in which the player is playing
+    if(world->Create){//Creating world if we started first time
       world->CreateWorld(ScaleLcdHorizontal, ScaleLcdVertical);
       snake->Start();
     }
-     if(world->SpawnFood)
+    if(world->SpawnFood)//Creating Food if the snake ate or first time
       food->GenerateFood();
     snake->MoveSnake(vert,horiz);
-    if(world->Score>=10){
-      Active = false;
-      menu->Win();
-      snake->Again();
-      }
-    if(world->GameOver){
-      world->GameOver=false;
-      menu->GameOver();
-      Active = false;
-      snake->Again();
-      }
-    }
-  if(horiz<=100&&Active==false){
+    GameState();
+  }
+}
+inline void GameState(){
+  if(world->Score>=10){//State of victory
+    Active = false;
+    menu->Win();
+    snake->Again();
+   }
+  if(world->GameOver){//Loss status
+    world->GameOver=false;
+    menu->GameOver();
+    Active = false;
+    snake->Again();
+   }
+}
+inline void ChoiceMode(int& h){
+    if(horiz<=100&&Active==false){
       menu->SetActiveMenu(false);
       Active =true;
   }
   else if(horiz>=980&&Active==false){
       menu->SetActiveMenu(true);
       Active = true; 
-  }  
+  } 
 }

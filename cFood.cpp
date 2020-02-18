@@ -8,7 +8,7 @@ cFood::cFood(const LiquidCrystal_I2C* L, const cWorld* W){
   randomSeed(analogRead(0));
 }
 
-void cFood::GenerateFood(){
+void cFood::GenerateFood(){//Filling food properties
   FoodLocationV = random(0,1);
   FoodLocationH = random(1,15);
   RandomFoodLocation = random(0,4);
@@ -17,7 +17,7 @@ void cFood::GenerateFood(){
   World->GetValueFood(FoodLocationV, FoodLocationH, RandomFoodLocation, VerticalLocalFood);
 }
 
-void cFood::Drawing(){
+void cFood::Drawing(){//rendering pixel
   World->WorldBlocks[FoodLocationH][VerticalLocalFood]|= (1<<RandomFoodLocation); 
   LCD->createChar(7,World->WorldBlocks[FoodLocationH]);
   LCD->setCursor(FoodLocationH, FoodLocationV);

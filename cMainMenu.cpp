@@ -9,7 +9,7 @@ cMainMenu::cMainMenu(const LiquidCrystal_I2C* L, cWorld* W){
 
 inline void cMainMenu::Welcome(){Print("Welcome in Snake", 0, 0); DoMenu();}
   
-inline void cMainMenu::DoMenu(){
+inline void cMainMenu::DoMenu(){//Creating menu after start arduino 
   LCD->clear();
   LCD->setCursor(0,0);
   LCD->print("Choose an item");
@@ -17,7 +17,7 @@ inline void cMainMenu::DoMenu(){
   LCD->print("Arcade or Training");
 }
   
-void cMainMenu::SetActiveMenu(bool ActiveItemOne){
+void cMainMenu::SetActiveMenu(bool ActiveItemOne){//Choice mode snake
   if(ActiveItemOne){
     World->Mode = true;
     Print("Training", 5, 0);        
@@ -34,7 +34,7 @@ inline void cMainMenu::PrintScore(){
   LCD->print("Score:"+String(World->Score));
   delay(3000);
 }
-inline void cMainMenu::Print(String message = "", uint8_t valueH = 0,uint8_t valueV = 0,uint32_t Time = 1000){
+inline void cMainMenu::Print(String message = "", uint8_t valueH = 0,uint8_t valueV = 0,uint32_t Time = 1000){//Shortened output function
   LCD->clear();
   LCD->setCursor(valueH,valueV);
   LCD->print(message);

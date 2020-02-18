@@ -139,7 +139,7 @@ void cSnake::SetValueBody(const uint8_t &VGlobal,const uint8_t &HLocation, const
   Clear(bodyArray[0].VertLocation, bodyArray[0].HorizLocation);
 }
 
-void cSnake::TravelSystem(const int& V,const int& H){
+void cSnake::TravelSystem(const int& V,const int& H){//side selection
    if(H>900&&V>400&&V<600)
     MoveRight(); 
    else if(H<100&&V>400&&V<600)
