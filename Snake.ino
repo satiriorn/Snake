@@ -14,7 +14,7 @@ const int V = 2;
 const int H = 1;
 bool Active = false;
 int vert, horiz;
-
+//init game obj and pointer to them
 cWorld World(LCD);
 cWorld *world = &World;
 
@@ -37,12 +37,12 @@ void setup() {
 void loop() {  
   vert = analogRead(V);
   horiz = analogRead(H);
-  Activity();
-  ChoiceMode(horiz);
+  Activity();//The state in which the player is playing
+  ChoiceMode(horiz);//State of player
 }
 
 inline void Activity(){
-  if(Active){//The state in which the player is playing
+  if(Active){
     if(world->Create){//Creating world if we started first time
       world->CreateWorld(ScaleLcdHorizontal, ScaleLcdVertical);
       snake->Start();
